@@ -12,7 +12,7 @@ import {
 import React, { useEffect } from "react";
 
 import TopBar from "../../components/TopBar/TopBar";
-import "./AltaPieza.css";
+import "./AltaReactivo.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -27,7 +27,7 @@ const unidades = ["KG", "Litro(s)", "Mililitros", "Gramos"].map((item) => ({
   value: item,
 }));
 
-function AltaPieza() {
+function AltaReactivo() {
   const navigate = useNavigate();
   const toaster = useToaster();
 
@@ -105,7 +105,7 @@ function AltaPieza() {
 
   };
 
-  const crearPieza = async (e, event) => {
+  const crearReactivo = async (e, event) => {
     //Generación de código
     let nombre = event.target.elements.nombre.value;
     let vendedor = event.target.elements[6].defaultValue;
@@ -115,7 +115,7 @@ function AltaPieza() {
       .slice(0, 2)
       .toUpperCase()}-${time.toString().slice(-4)}`;
 
-    const nuevaPieza = {
+    const nuevoReactivo = {
       ID_Pieza: id,
       nombre: nombre,
       cantidad: parseFloat(event.target.elements.cantidad.value),
@@ -129,7 +129,7 @@ function AltaPieza() {
     };
 
     
-    const response = await axios.post(`http://192.168.0.130:4000/api/pieza/`, nuevaPieza)
+    const response = await axios.post(`http://192.168.0.130:4000/api/pieza/`, nuevoReactivo)
 
       if(response.status === 200){
 
@@ -149,17 +149,17 @@ function AltaPieza() {
     <div>
       <TopBar />
       <div className="section">
-        <h3 className="section-title"> Crear pieza</h3>
+        <h3 className="section-title"> Dar de alta reactivo</h3>
         <p className="desc">
-          Completá todos los campos para dar de alta una pieza. Una vez
+          Completá todos los campos para dar de alta un reactivo. Una vez
           completado, se generará el código QR para que puedas imprimir y
           gestionarla.
         </p>
 
         <div className="form-container">
-          <Form fluid onSubmit={crearPieza}>
+          <Form fluid onSubmit={crearReactivo}>
             <Form.Group controlId="nombre">
-              <Form.ControlLabel>Nombre de Pieza</Form.ControlLabel>
+              <Form.ControlLabel>Nombre de reactivo</Form.ControlLabel>
               <Form.Control name="nombre" required />
             </Form.Group>
 
@@ -258,5 +258,5 @@ function AltaPieza() {
   );
 }
 
-export default AltaPieza;
+export default AltaReactivo;
 

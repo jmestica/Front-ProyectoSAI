@@ -1,6 +1,6 @@
 import axios from "axios";
 import TopBar from "../../components/TopBar/TopBar";
-import "./GestionarPieza.css";
+import "./GestionarReactivo.css";
 
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import {
   Button,
 } from "rsuite";
 
-function GestionarPieza() {
+function GestionarReactivo() {
   const navigate = useNavigate();
   const toaster = useToaster();
 
@@ -52,8 +52,8 @@ function GestionarPieza() {
       <TopBar />
 
       <div className="section">
-        <h3 className="section-title"> Gestionar pieza</h3>
-        <p className="desc">Introduzca el identificador para gestionarla.</p>
+        <h3 className="section-title"> Gestionar Reactivo</h3>
+        <p className="desc">Introduzca el identificador para gestionar el reactivo.</p>
         <Form onSubmit={handleSubmit}>
           <br />
           <InputGroup id="ID_Pieza">
@@ -64,8 +64,7 @@ function GestionarPieza() {
 
           <br />
           <Button appearance="primary" block type="submit">
-            {" "}
-            Buscar pieza
+            Buscar Reactivo
           </Button>
         </Form>
       </div>
@@ -73,4 +72,4 @@ function GestionarPieza() {
   );
 }
 
-export default GestionarPieza;
+export default GestionarReactivo;

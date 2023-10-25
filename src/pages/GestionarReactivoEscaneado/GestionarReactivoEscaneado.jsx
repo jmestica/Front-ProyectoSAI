@@ -19,8 +19,8 @@ function GestionarPiezaEscaneado() {
       <TopBar />
 
       <div className="section">
-        <h3 className="section-title"> Gestionar pieza</h3>
-        <p className="desc">Seleccione una opción para gestionar la pieza</p>
+        <h3 className="section-title"> Gestionar el reactivo</h3>
+        <p className="desc">Seleccione una opción para gestionar el reactivo</p>
 
         <br />
         <Row gutter={16} className="menu-container">
