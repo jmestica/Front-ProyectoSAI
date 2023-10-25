@@ -22,10 +22,6 @@ const Textarea = React.forwardRef((props, ref) => (
 ));
 
 
-const unidades = ["KG", "Litro(s)", "Mililitros", "Gramos"].map((item) => ({
-  label: item,
-  value: item,
-}));
 
 function AltaReactivo() {
   const navigate = useNavigate();
@@ -168,11 +164,6 @@ function AltaReactivo() {
 
               <div className="row-input">
                 <InputNumber name="cantidad" />
-                <SelectPicker
-                  data={unidades}
-                  placeholder="Unidad"
-                  name="unidad"
-                />
               </div>
             </Form.Group>
 
