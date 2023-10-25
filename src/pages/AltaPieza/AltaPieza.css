@@ -1,0 +1,90 @@
+.section {
+  width: 100%;
+  min-height: calc(100vh - 90px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.desc {
+  font-size: 19px;
+  max-width: 50rem;
+  text-align: center;
+}
+
+.form-container {
+  margin-top: 2rem;
+  width: 60rem;
+}
+
+.select-vendedor{
+    width: 100%;
+}
+
+.create-vendedor{
+    margin-top: 10px;
+}
+
+.span-onclick {
+    color: rgb(0, 132, 255);
+    cursor: pointer;
+}
+
+.rs-modal-content{
+    margin-top: 8rem;
+}
+
+.row-input{
+  display: flex;
+  
+}
+
+
+
+@media only screen and (max-width: 980px) {
+  .form-container {
+    width: 40rem;
+  }
+
+  .desc {
+    font-size: 16px;
+    max-width: 40rem;
+  }
+}
+
+
+@media only screen and (max-width: 680px) {
+    .form-container {
+      width: 30rem;
+    }
+  
+    .desc {
+      font-size: 16px;
+      max-width: 30rem;
+    }
+  }
+  
+
+
+  @media only screen and (max-width: 510px) {
+    .form-container {
+      width: 20rem;
+    }
+  
+    .desc {
+      font-size: 15px !important;
+      padding: 0 20px;
+      max-width: 22rem;
+    }
+
+    .section-title{
+        margin-bottom: 0.3rem;
+    }
+  }
+  

@@ -1,0 +1,19 @@
+
+
+.error{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title{
+    max-width: 70rem;
+    text-align: center;
+}
+
+.img-error{
+    width: 50%;
+}
