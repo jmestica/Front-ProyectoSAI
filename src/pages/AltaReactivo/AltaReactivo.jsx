@@ -1,3 +1,4 @@
+// ===== React Suite
 import {
   Button,
   Form,
@@ -5,56 +6,102 @@ import {
   DatePicker,
   InputNumber,
   Notification,
-  useToaster
+  useToaster,
+  SelectPicker
 } from "rsuite";
-import React from "react";
 
-import TopBar from "../../components/TopBar/TopBar";
-import "./AltaReactivo.css";
+//====== React Hooks
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-import API_URL from "../../../config"
-
 
 // eslint-disable-next-line react/display-name
 const Textarea = React.forwardRef((props, ref) => (
   <Input {...props} as="textarea" ref={ref} />
 ));
 
+//==== Componentes y Estilos
+import TopBar from "../../components/TopBar/TopBar";
+import "./AltaReactivo.css";
+import {API_URL, PORT} from "../../../config.js"
+
+
+const nombres_reactivos = ['Acetona Grado Plaguicida', 'Acetona PA', 'Cloruro de Metileno Grado Plaguicida - Diclorometano', 'Éter de Petróleo Grado Plaguicida', 'Sulfato de Sodio Anhidro', 'Hexano Grado Plaguicida', 'Metanol Grado Plaguicida'].map(
+  item => ({ label: item, value: item })
+);
 
 
 function AltaReactivo() {
+  
   const navigate = useNavigate();
   const toaster = useToaster();
-  
-  const errorMessage = (
-    <Notification type="error" header="Error en la creación" closable>
 
-    </Notification>
-  );
+  const [contador, setContador] = useState(null);
+
+  useEffect(() => {
+
+    // Función para hacer la llamada a la API y obtener información de la codificación
+    const fetchData = async () => {
+      try {
+        const respuesta_contador = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/contador`);
+        
+        if (respuesta_contador.status === 200) {
+          
+          // Actualizar el estado del contador con los datos de la API
+          setContador(respuesta_contador.data.numero_contador);
+
+        } else {
+          console.error('Error al obtener el contador');
+        }
+      } catch (error) {
+        console.error('Error en la obtención del contador', error);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
 
   const crearReactivo = async (e, event) => {
+
+    //Obtención de datos de formulario
+    const formulario = event.target.elements
+
     //Generación de código
-    let nombre = event.target.elements.nombre.value;
-    let vendedor = event.target.elements[6].defaultValue;
-    let time = Date.now();
+    const prefijo_laboratorio = 'C'
+    let nombre = formulario.nombre.defaultValue;
+    let codigo_reactivo = prefijo_laboratorio + nombre.slice(0,3).toUpperCase() + contador
 
-    let id = `${nombre.slice(0, 3).toUpperCase()}${vendedor
-      .slice(0, 2)
-      .toUpperCase()}-${time.toString().slice(-4)}`;
+    //Fecha de registro
+    const date = new Date()
+    const fecha_registro = date.toLocaleDateString('es-AR')
 
+    //Creación de objeto a insertar
     const nuevoReactivo = {
-
+      codigo: codigo_reactivo,
+      observaciones: formulario.observaciones.value,
+      nombre_reactivo: nombre,
+      cantidad: formulario.cantidad.value,
+      fecha_vto: formulario.fecha_vto.value,
+      nro_lote: formulario.nro_lote.value,
+      fecha_ingreso: fecha_registro,
+      nro_expediente: formulario.numero_expediente.value,
+      conservacion: formulario.conservacion.value,
+      fecha_finalizacion: null,
+      marca: formulario.marca.value,
+      fecha_descarte: null,
+      contador: (contador + 1)
     };
 
+    console.log(nuevoReactivo);
     
     const response = await axios.post(`http://${API_URL}:${PORT}/api/reactivo/`, nuevoReactivo)
 
+    console.log(response)
+
       if(response.status === 200){
 
-          navigate(`/tracker/qr/${id}`);
+          navigate(`/tracker/qr/${codigo_reactivo}`);
 
       } else{
 
@@ -65,6 +112,12 @@ function AltaReactivo() {
 
   
   };
+
+  const errorMessage = (
+    <Notification type="error" header="Error en la creación" closable>
+
+    </Notification>
+  );
 
   return (
     <div>
@@ -80,12 +133,12 @@ function AltaReactivo() {
         <div className="form-container">
           <Form fluid onSubmit={crearReactivo}>
             <Form.Group controlId="nombre">
-              <Form.ControlLabel>Nombre de reactivo</Form.ControlLabel>
-              <Form.Control name="nombre" required />
+              <Form.ControlLabel>Nombre de reactivo *</Form.ControlLabel>
+              <SelectPicker id="nombre" data={nombres_reactivos} required placeholder="Seleccione el reactivo" block/>
             </Form.Group>
             
             <Form.Group controlId="fecha_vto">
-              <Form.ControlLabel>Fecha de Vencimiento</Form.ControlLabel>
+              <Form.ControlLabel>Fecha de Vencimiento *</Form.ControlLabel>
 
               <DatePicker
                 className="select-vendedor"
@@ -93,39 +146,40 @@ function AltaReactivo() {
                 format="dd-MM-yyyy"
                 placeholder="Selecciona la fecha de vencimiento"
                 required
+                id="fecha_vto"
                 placement="auto"
               />
             </Form.Group>
 
             <Form.Group controlId="cantidad">
-              <Form.ControlLabel>Cantidad</Form.ControlLabel>
+              <Form.ControlLabel>Cantidad *</Form.ControlLabel>
 
               <div className="row-input">
-                <InputNumber name="cantidad" />
+                <InputNumber name="cantidad" required/>
                 <Input plaintext value="Mililitros" className="input-plain"/>             
               </div>
    
             </Form.Group>
 
             <Form.Group controlId="nro_lote">
-              <Form.ControlLabel>Número de Lote</Form.ControlLabel>
+              <Form.ControlLabel>Número de Lote *</Form.ControlLabel>
               <InputNumber name="nro_lote" required />
             </Form.Group>
 
             <Form.Group controlId="numero_expediente">
-              <Form.ControlLabel>Número de Expediente</Form.ControlLabel>
-              <Form.Control name="numero_expediente" required />
+              <Form.ControlLabel>Número de Expediente </Form.ControlLabel>
+              <Form.Control name="numero_expediente"  />
             </Form.Group>
 
             
             <Form.Group controlId="vendedor">
-              <Form.ControlLabel>Marca</Form.ControlLabel>
+              <Form.ControlLabel>Marca *</Form.ControlLabel>
               <Form.Control name="marca" required />
             </Form.Group>
 
 
             <Form.Group controlId="conservacion">
-              <Form.ControlLabel>Condiciones de Conservación</Form.ControlLabel>
+              <Form.ControlLabel>Condiciones de Conservación *</Form.ControlLabel>
               <Form.Control name="conservacion" required />
             </Form.Group>
 
@@ -135,21 +189,16 @@ function AltaReactivo() {
                 rows={2}
                 name="observaciones"
                 accepter={Textarea}
-                required
               />
 
             <Form.HelpText> <b> Reactivo Registrado según FITGE 018.01.01 - Versión 001 - VIGENCIA DESDE: 01/01/2023</b></Form.HelpText>
 
             </Form.Group>
 
-
-
-
             <Button block appearance="primary" type="submit" className="main-btn">
               Dar de Alta Pieza
             </Button>
             
-
           </Form>
         </div>
       </div>
