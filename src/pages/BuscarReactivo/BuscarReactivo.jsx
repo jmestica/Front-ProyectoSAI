@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/TopBar/TopBar";
-import "./GestionarReactivo.css";
+import "./BuscarReactivo.css";
 
 import { API_URL, PORT } from "../../../config";
 
@@ -17,7 +17,7 @@ import {
   InputPicker,
 } from "rsuite";
 
-function GestionarReactivo() {
+function BuscarReactivo() {
 
   const [reactivos, setReactivos] = useState([]); // Estado para almacenar los datos de los reactivos
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
@@ -30,25 +30,24 @@ function GestionarReactivo() {
 
   const handleSubmit = async (e, event) => {
 
-    const ID_Pieza =
-      event.target.elements.ID_Pieza_Pre.value.toUpperCase() +
-      "-" +
-      event.target.elements.ID_Pieza_Suf.value;
-
-    const found = await axios.get(`http://${API_URL}:${PORT}/api/pieza/${ID_Pieza}`)
-
-    if (found.data.id_pieza) {
-
-      navigate(`/tracker/gestionarpieza/${ID_Pieza}`)
-
-
-    } else {
-      toaster.push(notFound, { placement: "bottomCenter" });
+    if (searchTerm == null) {
+      const notFound = (
+        <Notification
+          header="El identificador de pieza es inválido"
+          closable
+          type="error"
+        >
+          No se encontró ninguna pieza con ese identificador, por favor, verifiquelo
+          e intente nuevamente
+        </Notification>
+      );
     }
+    navigate(`/tracker/gestionar-reactivo/${searchTerm}`);
+
   };
 
   /* MENSAJES DE ERRORES */
-
+  /*FEATURES: dinamizar este componente */
   const notFound = (
     <Notification
       header="El identificador de pieza es inválido"
@@ -60,7 +59,7 @@ function GestionarReactivo() {
     </Notification>
   );
 
-  const errorConection = (
+  const errorConnection = (
     <Notification
       header="Error al obtener los datos"
       closable
@@ -73,14 +72,15 @@ function GestionarReactivo() {
   /* MENSAJES DE ERRORES */
 
   /* FX QUE TRAE TODOS LOS REACTIVOS */
+
   const getReactivos = async () => {
     setLoading(true);
     const res = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/getAll`);
-    console.log(res)
     if (res.statusText !== "OK") {
-      toaster.push(errorConection, { placement: "bottomCenter" });
+      toaster.push(errorConnection, { placement: "bottomCenter" });
       return;
     }
+
     const { data } = res;
     const formattedData = data.map(item => ({ label: item.codigo, value: item.codigo }));
     setReactivos(formattedData);
@@ -91,7 +91,7 @@ function GestionarReactivo() {
     setSearchTerm(value);
   };
 
-  
+
   useEffect(() => {
     getReactivos();
   }, []);
@@ -150,5 +150,5 @@ function GestionarReactivo() {
   );
 }
 
-export default GestionarReactivo;
+export default BuscarReactivo;
 
