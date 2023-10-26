@@ -2,19 +2,20 @@ import {
   Button,
   Form,
   Input,
-  SelectPicker,
   DatePicker,
   InputNumber,
-  Modal,
   Notification,
   useToaster
 } from "rsuite";
-import React, { useEffect } from "react";
+import React from "react";
 
 import TopBar from "../../components/TopBar/TopBar";
 import "./AltaReactivo.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import API_URL from "../../../config"
+
 
 // eslint-disable-next-line react/display-name
 const Textarea = React.forwardRef((props, ref) => (
@@ -22,88 +23,17 @@ const Textarea = React.forwardRef((props, ref) => (
 ));
 
 
-const unidades = ["KG", "Litro(s)", "Mililitros", "Gramos"].map((item) => ({
-  label: item,
-  value: item,
-}));
 
 function AltaReactivo() {
   const navigate = useNavigate();
   const toaster = useToaster();
-
-  const [vendedores, setVendedores] = React.useState([]);
-  const [updateList, setUpdateList] = React.useState(false);
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  
   const errorMessage = (
     <Notification type="error" header="Error en la creación" closable>
 
     </Notification>
   );
 
-
-  useEffect(() => {
-
-    const fetchVendedores = async () => {
-      // Llamada a una función asíncrona que devuelve un array de datos
-      const response = await axios.get('http://192.168.0.130:4000/api/vendedor')
-
-      const vendedores = response.data.map((item) => ({
-        label: item.nombre_vendedor,
-        value: item.nombre_vendedor,
-      }));
-      
-      setVendedores(vendedores);
-    };
-
-    fetchVendedores();
-  }, []);
-
-
-  /*Acá se llama a la base de datos para recuperar los vendedores
-  ya que se podría haber agregado uno nuevo, además podría ser optimizado
-  con un estado que verifique si alguno nuevo fue creado*/
-
-  const updateVendedores = async () => {
-    if (updateList) {
-      console.log("Actualizar la lista");
-
-      setUpdateList(false);
-    }
-
-    const response = await axios.get('http://192.168.0.130:4000/api/vendedor')
-
-    const vendedores = response.data.map((item) => ({
-      label: item.nombre_vendedor,
-      value: item.nombre_vendedor,
-    }));
-    
-    setVendedores(vendedores);
-
-
-  };
-
-  const crearVendedor = async (e, event) => {
-    const nuevoVendedor = {
-      nombre_vendedor: event.target.elements.nombre_vendedor.value,
-      ubicacion: event.target.elements.ubicacion.value,
-    };
-
-    //Endpoint para crear vendedor
-    const response = await axios.post('http://192.168.0.130:4000/api/vendedor', nuevoVendedor)
-
-    if (response.data) {
-
-      handleClose()
-      setUpdateList(true);
-     
-    }
-
-
-  };
 
   const crearReactivo = async (e, event) => {
     //Generación de código
@@ -116,20 +46,11 @@ function AltaReactivo() {
       .toUpperCase()}-${time.toString().slice(-4)}`;
 
     const nuevoReactivo = {
-      ID_Pieza: id,
-      nombre: nombre,
-      cantidad: parseFloat(event.target.elements.cantidad.value),
-      unidad: event.target.elements[4].defaultValue ,
-      descripcion: event.target.elements.descripcion.value,
-      es_comprada: {
-        nombre_vendedor: vendedor,
-        fecha: event.target.elements[7].defaultValue,
-        monto_compra: parseFloat(event.target.elements.monto.value),
-      },
+
     };
 
     
-    const response = await axios.post(`http://192.168.0.130:4000/api/pieza/`, nuevoReactivo)
+    const response = await axios.post(`http://${API_URL}:${PORT}/api/reactivo/`, nuevoReactivo)
 
       if(response.status === 200){
 
@@ -162,98 +83,76 @@ function AltaReactivo() {
               <Form.ControlLabel>Nombre de reactivo</Form.ControlLabel>
               <Form.Control name="nombre" required />
             </Form.Group>
+            
+            <Form.Group controlId="fecha_vto">
+              <Form.ControlLabel>Fecha de Vencimiento</Form.ControlLabel>
+
+              <DatePicker
+                className="select-vendedor"
+                name="fecha_compra"
+                format="dd-MM-yyyy"
+                placeholder="Selecciona la fecha de vencimiento"
+                required
+                placement="auto"
+              />
+            </Form.Group>
 
             <Form.Group controlId="cantidad">
               <Form.ControlLabel>Cantidad</Form.ControlLabel>
 
               <div className="row-input">
                 <InputNumber name="cantidad" />
-                <SelectPicker
-                  data={unidades}
-                  placeholder="Unidad"
-                  name="unidad"
-                />
+                <Input plaintext value="Mililitros" className="input-plain"/>             
               </div>
+   
             </Form.Group>
 
-            <Form.Group controlId="descripcion">
-              <Form.ControlLabel>Descripción</Form.ControlLabel>
+            <Form.Group controlId="nro_lote">
+              <Form.ControlLabel>Número de Lote</Form.ControlLabel>
+              <InputNumber name="nro_lote" required />
+            </Form.Group>
+
+            <Form.Group controlId="numero_expediente">
+              <Form.ControlLabel>Número de Expediente</Form.ControlLabel>
+              <Form.Control name="numero_expediente" required />
+            </Form.Group>
+
+            
+            <Form.Group controlId="vendedor">
+              <Form.ControlLabel>Marca</Form.ControlLabel>
+              <Form.Control name="marca" required />
+            </Form.Group>
+
+
+            <Form.Group controlId="conservacion">
+              <Form.ControlLabel>Condiciones de Conservación</Form.ControlLabel>
+              <Form.Control name="conservacion" required />
+            </Form.Group>
+
+            <Form.Group controlId="observaciones">
+              <Form.ControlLabel>Observaciones</Form.ControlLabel>
               <Form.Control
-                rows={3}
-                name="descripcion"
+                rows={2}
+                name="observaciones"
                 accepter={Textarea}
                 required
               />
+
+            <Form.HelpText> <b> Reactivo Registrado según FITGE 018.01.01 - Versión 001 - VIGENCIA DESDE: 01/01/2023</b></Form.HelpText>
+
             </Form.Group>
 
-            <Form.Group controlId="vendedor">
-              <Form.ControlLabel>Vendedor</Form.ControlLabel>
-              <SelectPicker
-                data={vendedores}
-                onOpen={updateVendedores}
-                className="select-vendedor"
-                placeholder="Selecciona vendedor"
-                name="vendedor"
-              />
-              <p className="create-vendedor">
-                ¿No encontrás el vendedor que estás buscando?{" "}
-                <span onClick={handleOpen} className="span-onclick">
-                  {" "}
-                  Hace click acá para crear uno nuevo{" "}
-                </span>{" "}
-              </p>
-            </Form.Group>
 
-            <Form.Group controlId="fecha_compra">
-              <Form.ControlLabel>Fecha de Compra</Form.ControlLabel>
 
-              <DatePicker
-                className="select-vendedor"
-                name="fecha_compra"
-                format="dd-MM-yyyy"
-                placeholder="Selecciona la fecha de compra"
-                required
-                placement="auto"
-              />
-            </Form.Group>
 
-            <Form.Group controlId="monto">
-              <Form.ControlLabel>Monto de Compra</Form.ControlLabel>
-              <InputNumber prefix="$" name="monto" />
-            </Form.Group>
-
-            <Button block appearance="primary" type="submit">
-              {" "}
+            <Button block appearance="primary" type="submit" className="main-btn">
               Dar de Alta Pieza
             </Button>
+            
+
           </Form>
         </div>
       </div>
-
-      <Modal open={open} onClose={handleClose} className="modal-vendedor">
-        <Modal.Header>
-          <Modal.Title>Añadir Vendedor</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form fluid onSubmit={crearVendedor}>
-            <Form.Group>
-              <Form.ControlLabel>Nombre de Vendedor</Form.ControlLabel>
-              <Form.Control name="nombre_vendedor" required />
-            </Form.Group>
-            <Form.Group>
-              <Form.ControlLabel>Origen del Vendedor</Form.ControlLabel>
-              <Form.Control name="ubicacion" required />
-            </Form.Group>
-
-            <Button type="submit" appearance="primary">
-              Añadir Vendedor
-            </Button>
-            <Button onClick={handleClose} appearance="primary" color="red">
-              Cancelar
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 }

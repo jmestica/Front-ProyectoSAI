@@ -42,7 +42,16 @@
 
 .row-input{
   display: flex;
-  
+  justify-content: center;
+  align-items: center;
+}
+
+.main-btn{
+  margin-bottom: 4rem;
+}
+
+.rs-plaintext{
+  margin: 0 10px;
 }
 
 
