@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/TopBar/TopBar";
 import "./GestionarReactivo.css";
 
-import { useNavigate } from "react-router-dom";
 import { API_URL, PORT } from "../../../config";
 
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
@@ -47,6 +47,8 @@ function GestionarReactivo() {
     }
   };
 
+  /* MENSAJES DE ERRORES */
+
   const notFound = (
     <Notification
       header="El identificador de pieza es inválido"
@@ -58,34 +60,58 @@ function GestionarReactivo() {
     </Notification>
   );
 
-  // Trae todos los reactivos cargados en BD.
+  const errorConection = (
+    <Notification
+      header="Error al obtener los datos"
+      closable
+      type="error"
+    >
+      No se ha podido cargar los datos en este momento. Por favor, inténtalo de nuevo más tarde.
+    </Notification>
+  );
+
+  /* MENSAJES DE ERRORES */
+
+  /* FX QUE TRAE TODOS LOS REACTIVOS */
   const getReactivos = async () => {
     setLoading(true);
-    const found = await axios.get(`http://${API_URL}:${PORT}//api/reactivo/getAll`);
-  }
-
-  useEffect(() => {
-    try {
-      getReactivos();
-    } catch (error) {
-      console.error('Error al obtener los datos: ', error);
+    const res = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/getAll`);
+    console.log(res)
+    if (res.statusText !== "OK") {
+      toaster.push(errorConection, { placement: "bottomCenter" });
+      return;
     }
-  }, []);
-
-  useEffect(() => {
-    // Filtra los reactivos según el término de búsqueda
-    const filtered = reactivos.filter((reactivo) =>
-      reactivo.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredReactivos(filtered);
-  }, [searchTerm, reactivos]);
+    const { data } = res;
+    const formattedData = data.map(item => ({ label: item.codigo, value: item.codigo }));
+    setReactivos(formattedData);
+    setLoading(false)
+  }
 
   const handleSearchChange = (value) => {
     setSearchTerm(value);
   };
 
+  
+  useEffect(() => {
+    getReactivos();
+  }, []);
+
+  useEffect(() => {
+    // Filtra los reactivos si es que el usuario ingreso un codigo en el input.
+    if (searchTerm) {
+      const filtered = reactivos.filter((reactivo) =>
+        reactivo.label.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredReactivos(filtered);
+    } else {
+      // Si searchTerm está vacío, muestra todos los reactivos sin filtro.
+      setFilteredReactivos(reactivos);
+    }
+  }, [searchTerm, reactivos]);
+
 
   return (
+
     <div>
       <TopBar />
       {/* Ver si este componente es reutilizable para cargar un nuevo reactivo */}
@@ -97,7 +123,7 @@ function GestionarReactivo() {
           <InputGroup id="ID_Pieza">
             <InputPicker
               data={filteredReactivos}
-              value={searchTerm}
+              value={searchTerm ? searchTerm : ''}
               onChange={handleSearchChange}
               labelKey="label"
               placeholder="Escribe para buscar un reactivo"
