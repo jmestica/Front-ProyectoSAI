@@ -32,18 +32,18 @@ function App() {
             <Route path="/tracker" exact element={<Home />} />
 
             <Route
-              path="/tracker/gestionarpieza"
+              path="/tracker/gestionarreactivo"
               exact
               element={<GestionarReactivo />}
             />
 
             <Route
-              path="/tracker/gestionarpieza/:id"
+              path="/tracker/gestionarreactivo/:id"
               exact
               element={<GestionarReactivoEscaneado />}
             />
 
-            <Route path="/tracker/crearpieza" exact element={<AltaReactivo />} />
+            <Route path="/tracker/crearreactivo" exact element={<AltaReactivo />} />
 
             <Route path="/tracker/qr/:id" exact element={<QRPage />} />
 

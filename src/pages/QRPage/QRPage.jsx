@@ -5,6 +5,7 @@ import { Button } from "rsuite";
 import "./QRPage.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL, PORT } from "../../../config";
 
 function QRPage() {
   const params = useParams();
@@ -15,7 +16,7 @@ function QRPage() {
     async function fetchQRCode() {
       try {
         const response = await axios.get(
-          `http://192.168.0.130:4000/api/pieza/getQR/${params.id}`
+          `http://${API_URL}:${PORT}/api/reactivo/getQR/${params.id}`
         );
 
         setQRCode(response.data.qr_code);
@@ -38,7 +39,7 @@ function QRPage() {
       <TopBar />
 
       <div className="print-container">
-        <h4 className="id">CÓDIGO DE PIEZA: {params.id}</h4>
+        <h4 className="id">CÓDIGO DE REACTIVO: {params.id}</h4>
 
         <img
           src={QRCode}
