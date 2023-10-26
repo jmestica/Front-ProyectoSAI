@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Error404 from "./pages/404/Error404";
-import GestionarReactivoEscaneado from "./pages/GestionarReactivoEscaneado/GestionarReactivoEscaneado";
 import AltaReactivo from "./pages/AltaReactivo/AltaReactivo";
-import GestionarReactivo from "./pages/GestionarReactivo/GestionarReactivo";
+import GestionarReactivoEscaneado from "./pages/GestionarReactivoEscaneado/GestionarReactivoEscaneado";
+import BuscarReactivo from "./pages/BuscarReactivo/BuscarReactivo";
 import QRPage from "./pages/QRPage/QRPage";
 
 //Styles
@@ -34,7 +34,7 @@ function App() {
             <Route
               path="/tracker/gestionar-reactivo"
               exact
-              element={<GestionarReactivo />}
+              element={<BuscarReactivo />}
             />
 
             <Route

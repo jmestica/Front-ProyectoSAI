@@ -10,7 +10,7 @@ import img4 from "../../assets/get-qr.png";
 
 import { useParams } from "react-router-dom";
 
-function GestionarPiezaEscaneado() {
+function GestionarReactivoEscaneado() {
 
   const params = useParams();
 
@@ -38,4 +38,4 @@ function GestionarPiezaEscaneado() {
   );
 }
 
-export default GestionarPiezaEscaneado;
+export default GestionarReactivoEscaneado;
