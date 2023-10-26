@@ -54,6 +54,9 @@
   margin: 0 10px;
 }
 
+.rs-form-vertical{
+  margin: 2rem 0;
+}
 
 
 @media only screen and (max-width: 980px) {
