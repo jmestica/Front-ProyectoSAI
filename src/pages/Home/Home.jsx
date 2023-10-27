@@ -20,11 +20,10 @@ function Home() {
       <Row gutter={16}>
         
         <Card img_path={img1} title={'Dar de alta reactivo'} link={'/tracker/crear-reactivo'} xl={12}/>
+<<<<<<<<< Temporary merge branch 1
         <Card img_path={img2} title={'Gestionar Reactivo'} link={'/tracker/gestionar-reactivo'} xl={12}/>
         <Card img_path={img3} title={'Consultar stock'} link={'/tracker/stock'}/>
         {/* <Card img_path={img4} title={'Buscar producto'} link={'/tracker/buscar'}/> */}
-
-
       </Row>
     </Grid>
     </div>
