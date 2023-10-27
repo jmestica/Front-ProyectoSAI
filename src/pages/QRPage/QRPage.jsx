@@ -2,13 +2,20 @@ import TopBar from "../../components/TopBar/TopBar";
 import { useParams } from "react-router-dom";
 import { Button } from "rsuite";
 
+
 import "./QRPage.css";
 import { useEffect, useState } from "react";
+import { usePrint } from "../../customHooks/PrintContext";
+import { useDrawer } from '../../customHooks/DrawerContext';
+
+
 import axios from "axios";
 import { API_URL, PORT } from "../../../config";
 
 function QRPage() {
   const params = useParams();
+  const { incrementPrint, updatePrintList } = usePrint();
+  const { openDrawer } = useDrawer();
 
   const [QRCode, setQRCode] = useState("");
 
@@ -31,6 +38,48 @@ function QRPage() {
   const handlePrint = () => {
     window.print();
   };
+
+  const agregarLista = () => {
+
+    // Verificar si está creada la lista de impresión
+    const listaLocalStorage = localStorage.getItem('lista_impresion');
+
+    // Si no existe, inicializar la lista como un array vacío
+    if (!listaLocalStorage) {
+      localStorage.setItem('lista_impresion', JSON.stringify([]));
+    }
+
+    // Código de reactivo a inicializar 
+    const nueva_etiqueta = {
+      codigo_reactivo: params.id
+     }
+
+     const listaActual = JSON.parse(localStorage.getItem('lista_impresion'));
+
+     const etiquetaExistente = listaActual.find(etiqueta => etiqueta.codigo_reactivo === nueva_etiqueta.codigo_reactivo);
+
+      if(!etiquetaExistente) {
+
+        listaActual.push(nueva_etiqueta);
+
+        localStorage.setItem('lista_impresion', JSON.stringify(listaActual));
+   
+        incrementPrint();
+
+        updatePrintList(listaActual)
+
+        openDrawer();
+   
+      } else {
+
+        console.log('La etiqueta ya existe en la lista de impresión.');
+
+      }
+
+
+  }
+
+
 
   return (
     <div>
@@ -70,8 +119,13 @@ function QRPage() {
           appearance="primary"
           className="print-button no-print"
           onClick={handlePrint}
+          style={{marginTop: '20px'}}
         >
-          Imprimir QR
+          Imprimir etiqueta individualmente
+        </Button>
+     
+        <Button appearance="primary" color="green" className="print-button" onClick={agregarLista}>
+          Agregar a lista de impresión
         </Button>
       </div>
     </div>

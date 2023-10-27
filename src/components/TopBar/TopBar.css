@@ -28,7 +28,7 @@
     margin-right: 10px;
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 680px) {
 
     .logo-icon{
         font-size: 30px;
@@ -41,6 +41,10 @@
 
     .header{
         padding: 1rem;
+    }
+
+    .btn-text{
+        display: none;
     }
 
 }
