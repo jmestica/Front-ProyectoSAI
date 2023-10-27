@@ -37,6 +37,7 @@ function QRPage() {
 
   const handlePrint = () => {
     window.print();
+
   };
 
   const agregarLista = () => {
