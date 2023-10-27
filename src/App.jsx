@@ -15,7 +15,11 @@ import "./App.css";
 import "rsuite/dist/rsuite.min.css";
 import Historial from "./pages/Historial/Historial";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
+
 import Consumo from "./pages/Consumo/Consumo";
+import Movimiento from "./pages/Movimiento/Movimiento";
+import ConsultaStock from "./pages/ConsultaStock/ConsultaStock";
+
 
 function App() {
   return (
@@ -38,6 +42,12 @@ function App() {
             />
 
             <Route
+              path="/tracker/stock"
+              exact
+              element={<ConsultaStock/>}
+            />
+
+            <Route
               path="/tracker/gestionar-reactivo/:id"
               exact
               element={<GestionarReactivoEscaneado />}
@@ -53,10 +63,10 @@ function App() {
               element={<Historial />}
             />
 
-
             <Route
               path="/tracker/consumo/:id"
               exact
+
               element={<Consumo/>}
 
             />
