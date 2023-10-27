@@ -15,7 +15,7 @@ import "./App.css";
 import "rsuite/dist/rsuite.min.css";
 import Historial from "./pages/Historial/Historial";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
-import Movimiento from "./pages/Movimiento/Movimiento";
+import Consumo from "./pages/Consumo/Consumo";
 
 function App() {
   return (
@@ -55,9 +55,9 @@ function App() {
 
 
             <Route
-              path="/tracker/movimiento/:id"
+              path="/tracker/consumo/:id"
               exact
-              element={<Movimiento/>}
+              element={<Consumo/>}
 
             />
 

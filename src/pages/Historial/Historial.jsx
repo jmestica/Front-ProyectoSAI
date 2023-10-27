@@ -126,13 +126,15 @@ function Historial() {
 
         <div className="table-container-lg">
           <Table autoHeight cellBordered bordered data={historial}>
-            <Column align="center" width={35}>
+            <Column align="center" width={30}>
               <HeaderCell>#</HeaderCell>
               <Cell dataKey="index" fullText />
             </Column>
             <Column align="center" fixed flexGrow={1}>
-              <HeaderCell>Consumo (ml)</HeaderCell>
-              <Cell dataKey="cantidad_usada" />
+              <HeaderCell>Consumo</HeaderCell>
+              <Cell>
+                {rowData => rowData.cantidad_usada + ' ml'}
+              </Cell>
             </Column>
             <Column align="center" fixed flexGrow={2}>
               <HeaderCell>Fecha</HeaderCell>

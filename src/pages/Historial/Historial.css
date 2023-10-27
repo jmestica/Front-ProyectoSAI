@@ -58,7 +58,7 @@
 @media only screen and (max-width: 450px) {
 
   .table-container-lg{
-    display: none;
+    overflow-x: auto;
  }
 
  .table-container-sm{
@@ -77,4 +77,16 @@
   .info-container {
     padding: 0 1rem;
   }
+
+  .rs-table-cell-bordered {
+    font-size: 11px;
+  }
+  
+  .rs-table-row-header {
+    font-size: 11px;
+  }
+
 }
+
+
+
