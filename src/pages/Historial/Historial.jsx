@@ -8,6 +8,7 @@ import axios from "axios";
 import { API_URL, PORT } from "../../../config";
 
 function Historial() {
+
   const params = useParams();
 
   const [infoReactivo, setInfoReactivo] = useState([])
@@ -32,7 +33,7 @@ function Historial() {
       const historialData = res.data.map((item, index) => ({
         ...item,
         index: contador + index,
-        fechaFormateada:  new Date(`${item.registro_consumo}`).toLocaleDateString()
+        fechaFormateada: new Date(`${item.registro_consumo}`).toLocaleDateString()
       }));
       setHistorial(historialData);
 
@@ -55,15 +56,15 @@ function Historial() {
         return;
       }
 
-      const data= res.data[0];
+      const data = res.data[0];
 
       const datosReactivo = {
         ...data,
         fechaIngresoFormateada: new Date(`${data.fecha_ingreso}`).toLocaleDateString(),
         fechaVtoFormateada: new Date(`${data.fecha_vto}`).toLocaleDateString()
       }
-     
-console.log(datosReactivo);
+
+      console.log(datosReactivo);
       setInfoReactivo(datosReactivo)
 
     } catch (error) {
@@ -88,14 +89,6 @@ console.log(datosReactivo);
     fetchReactivo();
 
   }, []);
-
-  // const verDetalle = (rowData) => {
-  //   const index = rowData.id_consumo - 1;
-  //   const datosFila = datosAdicionales[index];
-  //   setDatosFila(datosFila);
-
-  //   handleOpen();
-  // };
 
 
   return (
@@ -143,7 +136,7 @@ console.log(datosReactivo);
             </Column>
             <Column align="center" fixed flexGrow={2}>
               <HeaderCell>Fecha</HeaderCell>
-              <Cell dataKey="fechaFormateada"/>
+              <Cell dataKey="fechaFormateada" />
             </Column>
             <Column align="center" fixed flexGrow={1}>
               <HeaderCell>Usuario</HeaderCell>
@@ -151,8 +144,6 @@ console.log(datosReactivo);
             </Column>
           </Table>
         </div>
-
-
       </div>
     </div >
   );
