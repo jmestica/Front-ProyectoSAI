@@ -191,6 +191,7 @@ function AltaReactivo() {
                 accepter={Textarea}
               />
 
+            <Form.HelpText> (*) Datos obligatorios </Form.HelpText>
             <Form.HelpText> <b> Reactivo Registrado según FITGE 018.01.01 - Versión 001 - VIGENCIA DESDE: 01/01/2023</b></Form.HelpText>
 
             </Form.Group>

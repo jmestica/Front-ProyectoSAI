@@ -21,8 +21,6 @@ function QRPage() {
 
         setQRCode(response.data.qr_code);
       } catch (error) {
-
-
         console.log(error);
       }
     }
@@ -39,14 +37,34 @@ function QRPage() {
       <TopBar />
 
       <div className="print-container">
-        <h4 className="id">CÓDIGO DE REACTIVO: {params.id}</h4>
+        <h4 className="id">Etiqueta de reactivo</h4>
+        <div className="etiqueta-qr">
+          <h4 className="codigo-reactivo">{params.id}</h4>
 
-        <img
-          src={QRCode}
-          style={{ width: "20rem" }}
-          className="QRCode"
-        />
+          <div className="img-container">
+          <img src={QRCode} style={{ width: "20rem" }} className="QRCode" />
 
+          </div>
+          <div className="vencimiento">
+           
+              <p>VTO</p>
+                
+              <div className="checks">
+              <div className="check-container">
+                   <div className="check">  </div>
+                   <p>90</p>
+              </div>
+              <div className="check-container">
+                   <div className="check">  </div>
+                   <p>60</p>
+              </div>
+              <div className="check-container">
+                   <div className="check">  </div>
+                   <p>30</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <Button
           appearance="primary"

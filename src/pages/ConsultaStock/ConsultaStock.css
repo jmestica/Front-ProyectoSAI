@@ -1,0 +1,19 @@
+.filter-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media only screen and (max-width: 780px) {
+
+.filter-container{
+        flex-direction: column;
+    }
+
+.filter-container .rs-picker{
+    margin: 10px 0;
+}
+
+}
+  
