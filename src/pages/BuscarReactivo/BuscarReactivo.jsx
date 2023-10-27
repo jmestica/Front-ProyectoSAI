@@ -43,7 +43,6 @@ function BuscarReactivo() {
       );
     }
     navigate(`/tracker/gestionar-reactivo/${searchTerm}`);
-
   };
 
   /* MENSAJES DE ERRORES */
@@ -77,7 +76,7 @@ function BuscarReactivo() {
     setLoading(true);
     const res = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/getAll`);
     if (res.statusText !== "OK") {
-      toaster.push(errorConnection, { placement: "bottomCenter" });
+      toaster.push(errorConnection, { placement: "TopCenter" });
       return;
     }
 
