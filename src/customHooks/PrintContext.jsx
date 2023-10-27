@@ -40,6 +40,7 @@ export const PrintProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePrint = () => {
   const context = useContext(PrintContext);
   if (!context) {
