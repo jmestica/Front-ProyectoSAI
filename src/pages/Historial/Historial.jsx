@@ -12,13 +12,7 @@ function Historial() {
 
   const [infoReactivo, setInfoReactivo] = useState([])
   const [historial, setHistorial] = useState([]);
-  const [datosAdicionales, setDatosAdicionales] = useState([]);
-  const [datosFila, setDatosFila] = useState();
   const [contador, setContador] = useState(1);
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
 
   // Llamada a una función asíncrona que devuelve un array de datos del historial
@@ -35,7 +29,11 @@ function Historial() {
       }
 
       // Asigna el n° de fila al contador y luego ++ el contador.
-      const historialData = res.data.map((item, index) => ({ ...item, index: contador + index }));
+      const historialData = res.data.map((item, index) => ({
+        ...item,
+        index: contador + index,
+        fechaFormateada:  new Date(`${item.registro_consumo}`).toLocaleDateString()
+      }));
       setHistorial(historialData);
 
     } catch (error) {
@@ -57,8 +55,15 @@ function Historial() {
         return;
       }
 
-      const datosReactivo = res.data[0];
-      console.log(datosReactivo);
+      const data= res.data[0];
+
+      const datosReactivo = {
+        ...data,
+        fechaIngresoFormateada: new Date(`${data.fecha_ingreso}`).toLocaleDateString(),
+        fechaVtoFormateada: new Date(`${data.fecha_vto}`).toLocaleDateString()
+      }
+     
+console.log(datosReactivo);
       setInfoReactivo(datosReactivo)
 
     } catch (error) {
@@ -101,7 +106,7 @@ function Historial() {
         <h4 className="title-product">{params.id}</h4>
         <hr />
 
-      <div className="info-container">
+        <div className="info-container">
           <div className="info">
             <p className="subtitle">Nombre</p>
             <p className="content">{infoReactivo?.nombre_reactivo}</p>
@@ -116,39 +121,39 @@ function Historial() {
           </div>
           <div className="info">
             <p className="subtitle">Fecha de Ingreso</p>
-            <p className="content">{infoReactivo?.fecha_ingreso}</p>
+            <p className="content">{infoReactivo?.fechaIngresoFormateada}</p>
           </div>
           <div className="info">
             <p className="subtitle">Vencimiento</p>
-            <p className="content">{infoReactivo?.fecha_vto} </p>
+            <p className="content">{infoReactivo?.fechaVtoFormateada} </p>
           </div>
         </div>
 
-      <h4 className="title-product">Historial</h4>
+        <h4 className="title-product">Historial</h4>
 
-      <div className="table-container-lg">
-        <Table autoHeight cellBordered bordered data={historial}>
-          <Column align="center" width={35}>
-            <HeaderCell>#</HeaderCell>
-            <Cell dataKey="index" fullText />
-          </Column>
-          <Column align="center" fixed flexGrow={1}>
-            <HeaderCell>Consumo (ml)</HeaderCell>
-            <Cell dataKey="cantidad_usada" />
-          </Column>
-          <Column align="center" fixed flexGrow={2}>
-            <HeaderCell>Fecha</HeaderCell>
-            <Cell dataKey="registro_consumo" />
-          </Column>
-          <Column align="center" fixed flexGrow={1}>
-            <HeaderCell>Usuario</HeaderCell>
-            <Cell dataKey="nombre_usuario" />
-          </Column>
-        </Table>
+        <div className="table-container-lg">
+          <Table autoHeight cellBordered bordered data={historial}>
+            <Column align="center" width={35}>
+              <HeaderCell>#</HeaderCell>
+              <Cell dataKey="index" fullText />
+            </Column>
+            <Column align="center" fixed flexGrow={1}>
+              <HeaderCell>Consumo (ml)</HeaderCell>
+              <Cell dataKey="cantidad_usada" />
+            </Column>
+            <Column align="center" fixed flexGrow={2}>
+              <HeaderCell>Fecha</HeaderCell>
+              <Cell dataKey="fechaFormateada"/>
+            </Column>
+            <Column align="center" fixed flexGrow={1}>
+              <HeaderCell>Usuario</HeaderCell>
+              <Cell dataKey="nombre_usuario" />
+            </Column>
+          </Table>
+        </div>
+
+
       </div>
-
-      
-    </div>
     </div >
   );
 }
