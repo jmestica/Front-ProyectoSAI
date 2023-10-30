@@ -21,8 +21,7 @@ function TopBar() {
 
   const { estado, openDrawer, closeDrawer } = useDrawer();
 
-  console.log(PrintList);
-
+  
   const logout = async () => {
     setAuth({});
     sessionStorage.removeItem("a_t_l_p");
