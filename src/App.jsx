@@ -18,7 +18,7 @@ import RequireAuth from "./components/RequireAuth/RequireAuth";
 
 import Consumo from "./pages/Consumo/Consumo";
 import ConsultaStock from "./pages/ConsultaStock/ConsultaStock";
-
+import Impresion from "./pages/Impresion/Impresion";
 
 function App() {
   return (
@@ -40,11 +40,7 @@ function App() {
               element={<BuscarReactivo />}
             />
 
-            <Route
-              path="/tracker/stock"
-              exact
-              element={<ConsultaStock/>}
-            />
+            <Route path="/tracker/stock" exact element={<ConsultaStock />} />
 
             <Route
               path="/tracker/gestionar-reactivo/:id"
@@ -52,7 +48,11 @@ function App() {
               element={<GestionarReactivoEscaneado />}
             />
 
-            <Route path="/tracker/crear-reactivo" exact element={<AltaReactivo />} />
+            <Route
+              path="/tracker/crear-reactivo"
+              exact
+              element={<AltaReactivo />}
+            />
 
             <Route path="/tracker/qr/:id" exact element={<QRPage />} />
 
@@ -62,13 +62,9 @@ function App() {
               element={<Historial />}
             />
 
-            <Route
-              path="/tracker/consumo/:id"
-              exact
+            <Route path="/tracker/consumo/:id" exact element={<Consumo />} />
 
-              element={<Consumo/>}
-
-            />
+            <Route path="/tracker/impresion" exact element={<Impresion />} />
 
           </Route>
         </Routes>

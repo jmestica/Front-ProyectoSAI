@@ -18,7 +18,6 @@ function Home() {
 
      <Grid fluid className="menu">
       <Row gutter={16}>
-        
         <Card img_path={img1} title={'Dar de alta reactivo'} link={'/tracker/crear-reactivo'} xl={12}/>
         <Card img_path={img2} title={'Gestionar Reactivo'} link={'/tracker/gestionar-reactivo'} xl={12}/>
         <Card img_path={img3} title={'Consultar stock'} link={'/tracker/stock'}/>
