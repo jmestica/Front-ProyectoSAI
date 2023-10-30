@@ -1,10 +1,13 @@
-import React from "react"
-import { useParams } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import TopBar from "../../components/TopBar/TopBar"
 import "./Consumo.css"
 import { Button, Form, Input, useToaster, Notification, InputNumber } from "rsuite"
 import axios from "axios"
-import { API_URL, PORT } from "../../../config"
+import { API_URL, PORT } from "../../../config";
+import { useFetchUltimoConsumo } from "../../customHooks/useFetch/useFetchUltimoConsumo"
+import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo"
+
 
 // eslint-disable-next-line react/display-name
 const Textarea = React.forwardRef((props, ref) => (
@@ -12,9 +15,14 @@ const Textarea = React.forwardRef((props, ref) => (
 ))
 
 function Consumo() {
-  const params = useParams()
-  const toaster = useToaster()
 
+  const { cantidadActual } = useFetchUltimoConsumo();
+  const { infoReactivo } = useFetchReactivo();
+  const params = useParams();
+  const toaster = useToaster();
+  const navigate = useNavigate();
+
+  
   const successNotification = (
     <Notification header="Se insertó con éxito" type="success">
       <p>El consumo se registró exitosamente</p>
@@ -36,23 +44,30 @@ function Consumo() {
 
     const nuevoConsumo = {
       codigo: params.id,
-      cantidad: event.target.elements.cantidad.value,
-      observaciones: event.target.elements.cantidad.value,
-      descripcion: event.target.elements.descripcion.value,
+      cantidad_usada: event.target.elements.cantidad_usada.value,
       registro_consumo: fecha_actual,
       nombre_usuario: sessionStorage.getItem("username"),
+      cantidad_actual: cantidadActual != null ? (cantidadActual - event.target.elements.cantidad_usada.value) :  infoReactivo.cantidad - event.target.elements.cantidad_usada.value
     };
 
     const res = await axios.post(
       `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
       nuevoConsumo
     );
-
-    event.target.reset()
-
-    res.data.success?  toaster.push(successNotification, {placement: 'topCenter'}) : toaster.push(errorNotification, {placement: 'topCenter'});
     
+
+    if (res.data.success) {
+
+      event.target.reset()
+      navigate(`/tracker/historial/${params.id}`, {replace: true});
+      toaster.push(successNotification, { placement: "topCenter" });
+      
+    } else {
+      toaster.push(errorNotification, { placement: "topCenter" });
+    }
+
   };
+  
 
   return (
     <>
@@ -65,21 +80,10 @@ function Consumo() {
           
           <Form onSubmit={handleSubmit} fluid>
 
-          <Form.Group controlId="cantidad">
+          <Form.Group controlId="cantidad_usada">
               <Form.ControlLabel>Cantidad (ml)</Form.ControlLabel>
-              <Form.Control accepter={InputNumber} name="cantidad" required />
-            </Form.Group>
-
-            <Form.Group controlId="descripcion">
-              <Form.ControlLabel>Descripción del consumo</Form.ControlLabel>
-              <Form.Control name="descripcion" required />
-            </Form.Group>
-
-            <Form.Group controlId="observaciones">
-              <Form.ControlLabel>
-                Observaciones (opcional)
-              </Form.ControlLabel>
-              <Form.Control rows={3} name="observaciones" accepter={Textarea} />
+              <Form.Control accepter={InputNumber} name="cantidad_usada" required />
+              <Form.HelpText>Cantidad actual: {cantidadActual != null ? cantidadActual : infoReactivo.cantidad} ml</Form.HelpText>
             </Form.Group>
 
             <Button type="submit" appearance="primary" block>
