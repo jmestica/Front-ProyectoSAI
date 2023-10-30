@@ -17,7 +17,6 @@ import Historial from "./pages/Historial/Historial";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 
 import Consumo from "./pages/Consumo/Consumo";
-import Movimiento from "./pages/Movimiento/Movimiento";
 import ConsultaStock from "./pages/ConsultaStock/ConsultaStock";
 
 

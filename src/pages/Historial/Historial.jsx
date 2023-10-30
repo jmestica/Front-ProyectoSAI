@@ -3,75 +3,80 @@ import { useParams } from "react-router-dom";
 import { Table, Modal, Button } from "rsuite";
 const { Column, HeaderCell, Cell } = Table;
 import "./Historial.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_URL, PORT } from "../../../config";
+import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo";
+import { useFetchHistorial } from "../../customHooks/useFetch/useFetchHistorial";
 
 function Historial() {
 
+  const { infoReactivo } = useFetchReactivo();
+  const { historial } = useFetchHistorial();
+
+  console.log(infoReactivo, "1");
+  console.log(historial, "2");
+ 
   const params = useParams();
 
-  const [infoReactivo, setInfoReactivo] = useState([])
-  const [historial, setHistorial] = useState([]);
-  const [contador, setContador] = useState(1);
+
+  // const [infoReactivo, setInfoReactivo] = useState([])
+  // const [historial, setHistorial] = useState([]);
+  // const [contador, setContador] = useState(1);
 
 
   // Llamada a una función asíncrona que devuelve un array de datos del historial
-  const fetchHistorial = async () => {
+  // const fetchHistorial = async () => {
 
-    try {
-      const res = await axios.get(
-        `http://${API_URL}:${PORT}/api/reactivo/historial/${params.id}`
-      );
+  //   try {
+  //     const res = await axios.get(
+  //       `http://${API_URL}:${PORT}/api/reactivo/historial/${params.id}`
+  //     );
 
-      if (res.statusText !== "OK") {
-        toaster.push(errorConnection, { placement: "TopCenter" });
-        return;
-      }
+  //     if (res.statusText !== "OK") {
+  //       toaster.push(errorConnection, { placement: "TopCenter" });
+  //       return;
+  //     }
 
-      // Asigna el n° de fila al contador y luego ++ el contador.
-      const historialData = res.data.map((item, index) => ({
-        ...item,
-        index: contador + index,
-        fechaFormateada: new Date(`${item.registro_consumo}`).toLocaleDateString()
-      }));
-      setHistorial(historialData);
+  //     // Asigna el n° de fila al contador y luego ++ el contador.
+  //     const historialData = res.data.map((item, index) => ({
+  //       ...item,
+  //       index: contador + index,
+  //       fechaFormateada: new Date(`${item.registro_consumo}`).toLocaleDateString()
+  //     }));
+  //     setHistorial(historialData);
 
-    } catch (error) {
-      console.error(error);
-      toaster.push(errorConnection, { placement: "TopCenter" });
-    }
-  }
+  //   } catch (error) {
+  //     console.error(error);
+  //     toaster.push(errorConnection, { placement: "TopCenter" });
+  //   }
+  // }
 
   // Llamada a una función asíncrona que devuelve la info de un reactivo.
-  const fetchReactivo = async () => {
+  // const fetchReactivo = async () => {
 
-    try {
-      const res = await axios.get(
-        `http://${API_URL}:${PORT}/api/reactivo/${params.id}`
-      );
+  //   try {
+  //     const res = await axios.get(
+  //       `http://${API_URL}:${PORT}/api/reactivo/${params.id}`
+  //     );
 
-      if (res.statusText !== "OK") {
-        toaster.push(errorConnection, { placement: "TopCenter" });
-        return;
-      }
+  //     if (res.statusText !== "OK") {
+  //       toaster.push(errorConnection, { placement: "TopCenter" });
+  //       return;
+  //     }
 
-      const data = res.data[0];
+  //     const data = res.data[0];
 
-      const datosReactivo = {
-        ...data,
-        fechaIngresoFormateada: new Date(`${data.fecha_ingreso}`).toLocaleDateString(),
-        fechaVtoFormateada: new Date(`${data.fecha_vto}`).toLocaleDateString()
-      }
+  //     const datosReactivo = {
+  //       ...data,
+  //       fechaIngresoFormateada: new Date(`${data.fecha_ingreso}`).toLocaleDateString(),
+  //       fechaVtoFormateada: new Date(`${data.fecha_vto}`).toLocaleDateString()
+  //     }
 
-      console.log(datosReactivo);
-      setInfoReactivo(datosReactivo)
+  //     setInfoReactivo(datosReactivo)
 
-    } catch (error) {
-      console.error(error);
-      toaster.push(errorConnection, { placement: "TopCenter" });
-    }
-  };
+  //   } catch (error) {
+  //     console.error(error);
+  //     toaster.push(errorConnection, { placement: "TopCenter" });
+  //   }
+  // };
 
   const errorConnection = (
     <Notification
@@ -82,13 +87,6 @@ function Historial() {
       No se ha podido cargar los datos en este momento. Por favor, inténtalo de nuevo más tarde.
     </Notification>
   )
-
-  useEffect(() => {
-
-    fetchHistorial();
-    fetchReactivo();
-
-  }, []);
 
 
   return (

@@ -4,6 +4,7 @@ import TopBar from "../../components/TopBar/TopBar"
 import "./Consumo.css"
 import { Button, Form, Input, useToaster, Notification, InputNumber } from "rsuite"
 import axios from "axios"
+import { API_URL, PORT } from "../../../config"
 
 // eslint-disable-next-line react/display-name
 const Textarea = React.forwardRef((props, ref) => (
@@ -30,20 +31,20 @@ function Consumo() {
   );
 
   const handleSubmit = async (e, event) => {
+
     const fecha_actual = new Date().toLocaleDateString();
-    const hora_actual = new Date().toLocaleTimeString().slice(0, 5);
 
     const nuevoConsumo = {
-      id_pieza: params.id,
-      accion: event.target.elements.accion.value,
-      datos_adicionales: event.target.elements.descripcion.value,
-      fecha: fecha_actual,
-      hora: hora_actual,
+      codigo: params.id,
+      cantidad: event.target.elements.cantidad.value,
+      observaciones: event.target.elements.cantidad.value,
+      descripcion: event.target.elements.descripcion.value,
+      registro_consumo: fecha_actual,
       nombre_usuario: sessionStorage.getItem("username"),
     };
 
     const res = await axios.post(
-      `http://192.168.0.130:4000/api/reactivo/consumo/${params.id}`,
+      `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
       nuevoConsumo
     );
 
@@ -69,16 +70,16 @@ function Consumo() {
               <Form.Control accepter={InputNumber} name="cantidad" required />
             </Form.Group>
 
-            <Form.Group controlId="accion">
+            <Form.Group controlId="descripcion">
               <Form.ControlLabel>Descripción del consumo</Form.ControlLabel>
-              <Form.Control name="accion" required />
+              <Form.Control name="descripcion" required />
             </Form.Group>
 
-            <Form.Group controlId="descripcion">
+            <Form.Group controlId="observaciones">
               <Form.ControlLabel>
-                Datos adicionales (opcional)
+                Observaciones (opcional)
               </Form.ControlLabel>
-              <Form.Control rows={3} name="descripcion" accepter={Textarea} />
+              <Form.Control rows={3} name="observaciones" accepter={Textarea} />
             </Form.Group>
 
             <Button type="submit" appearance="primary" block>
