@@ -1,21 +1,21 @@
 import TopBar from "../../components/TopBar/TopBar";
 import { useParams } from "react-router-dom";
-import { Button } from "rsuite";
-
+import { Button, Notification, useToaster } from "rsuite";
 
 import "./QRPage.css";
 import { useEffect, useState } from "react";
 import { usePrint } from "../../customHooks/PrintContext";
-import { useDrawer } from '../../customHooks/DrawerContext';
-
+import { useDrawer } from "../../customHooks/DrawerContext";
 
 import axios from "axios";
 import { API_URL, PORT } from "../../../config";
+import EtiquetaQR from "../../components/EtiquetaQR/EtiquetaQR";
 
 function QRPage() {
   const params = useParams();
   const { incrementPrint, updatePrintList } = usePrint();
   const { openDrawer } = useDrawer();
+  const toaster = useToaster();
 
   const [QRCode, setQRCode] = useState("");
 
@@ -37,95 +37,74 @@ function QRPage() {
 
   const handlePrint = () => {
     window.print();
-
   };
 
   const agregarLista = () => {
-
     // Verificar si está creada la lista de impresión
-    const listaLocalStorage = localStorage.getItem('lista_impresion');
+    const listaLocalStorage = localStorage.getItem("lista_impresion");
 
     // Si no existe, inicializar la lista como un array vacío
     if (!listaLocalStorage) {
-      localStorage.setItem('lista_impresion', JSON.stringify([]));
+      localStorage.setItem("lista_impresion", JSON.stringify([]));
     }
 
-    // Código de reactivo a inicializar 
+    // Código de reactivo a inicializar
     const nueva_etiqueta = {
-      codigo_reactivo: params.id
-     }
+      codigo_reactivo: params.id,
+      qr_code: QRCode,
+    };
 
-     const listaActual = JSON.parse(localStorage.getItem('lista_impresion'));
+    const listaActual = JSON.parse(localStorage.getItem("lista_impresion"));
 
-     const etiquetaExistente = listaActual.find(etiqueta => etiqueta.codigo_reactivo === nueva_etiqueta.codigo_reactivo);
+    const etiquetaExistente = listaActual.find(
+      (etiqueta) => etiqueta.codigo_reactivo === nueva_etiqueta.codigo_reactivo
+    );
 
-      if(!etiquetaExistente) {
+    if (!etiquetaExistente) {
+      listaActual.push(nueva_etiqueta);
 
-        listaActual.push(nueva_etiqueta);
+      localStorage.setItem("lista_impresion", JSON.stringify(listaActual));
 
-        localStorage.setItem('lista_impresion', JSON.stringify(listaActual));
-   
-        incrementPrint();
+      incrementPrint();
 
-        updatePrintList(listaActual)
+      updatePrintList(listaActual);
 
-        openDrawer();
-   
-      } else {
-
-        console.log('La etiqueta ya existe en la lista de impresión.');
-
-      }
-
-
-  }
-
-
+      openDrawer();
+    } else {
+      toaster.push(
+        <Notification closable>
+          <p>La etiqueta ya está en la lista de impresión</p>
+        </Notification> , {type: 'error'}
+      );
+      console.log("La etiqueta ya existe en la lista de impresión.");
+    }
+  };
 
   return (
     <div>
       <TopBar />
 
       <div className="print-container">
-        <h4 className="id">Etiqueta de reactivo</h4>
-        <div className="etiqueta-qr">
-          <h4 className="codigo-reactivo">{params.id}</h4>
+        <h4 className="id no-print">Etiqueta de reactivo</h4>
 
-          <div className="img-container">
-          <img src={QRCode} style={{ width: "20rem" }} className="QRCode" />
-
-          </div>
-          <div className="vencimiento">
-           
-              <p>VTO</p>
-                
-              <div className="checks">
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>90</p>
-              </div>
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>60</p>
-              </div>
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>30</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* etiqueta QR */}
+        <EtiquetaQR qr_code={QRCode} id={params.id} />
 
         <Button
           appearance="primary"
           className="print-button no-print"
           onClick={handlePrint}
-          style={{marginTop: '20px'}}
+          style={{ marginTop: "20px" }}
         >
           Imprimir etiqueta individualmente
         </Button>
-     
-        <Button appearance="primary" color="green" className="print-button" onClick={agregarLista}>
+
+        <Button
+          appearance="primary"
+          color="green"
+          className="print-button no-print"
+          onClick={agregarLista}
+        >
           Agregar a lista de impresión
         </Button>
       </div>

@@ -36,7 +36,7 @@ function TopBar() {
   }
 
   return (
-    <div className="header">
+    <div className="header no-print">
       <div className="logo">
         <QrcodeIcon className="logo-icon" />
         <Link to="/tracker">
@@ -53,9 +53,8 @@ function TopBar() {
           style={{ margin: "0 30px" }}
         >
           <Button>
-            {" "}
             <p className="btn-text">Lista de Impresión</p> &nbsp;{" "}
-            <AiFillPrinter />{" "}
+            <AiFillPrinter />
           </Button>
         </Badge>
 
@@ -74,7 +73,7 @@ function TopBar() {
           <Drawer.Title>Lista de Impresión</Drawer.Title>
           <Drawer.Actions>
             <Button onClick={() => closeDrawer()}>Cerrar</Button>
-            <Button href="/tracker/impresion" target="_blank" appearance="primary">
+            <Button href="/tracker/impresion"  appearance="primary">
               Imprimir
             </Button>
           </Drawer.Actions>
