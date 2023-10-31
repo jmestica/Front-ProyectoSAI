@@ -1,0 +1,20 @@
+.hoja{
+    width: 750px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.float-btn{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 10%;
+    left: 2%;
+}
+
+@media print {
+    .float-btn {
+      display: none;
+    }
+  }

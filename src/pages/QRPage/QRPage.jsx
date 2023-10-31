@@ -11,6 +11,7 @@ import { useDrawer } from '../../customHooks/DrawerContext';
 
 import axios from "axios";
 import { API_URL, PORT } from "../../../config";
+import EtiquetaQR from "../../components/EtiquetaQR/EtiquetaQR";
 
 function QRPage() {
   const params = useParams();
@@ -52,7 +53,8 @@ function QRPage() {
 
     // Código de reactivo a inicializar 
     const nueva_etiqueta = {
-      codigo_reactivo: params.id
+      codigo_reactivo: params.id,
+      qr_code: QRCode
      }
 
      const listaActual = JSON.parse(localStorage.getItem('lista_impresion'));
@@ -80,41 +82,15 @@ function QRPage() {
 
   }
 
-
-
   return (
     <div>
       <TopBar />
 
       <div className="print-container">
         <h4 className="id">Etiqueta de reactivo</h4>
-        <div className="etiqueta-qr">
-          <h4 className="codigo-reactivo">{params.id}</h4>
 
-          <div className="img-container">
-          <img src={QRCode} style={{ width: "20rem" }} className="QRCode" />
-
-          </div>
-          <div className="vencimiento">
-           
-              <p>VTO</p>
-                
-              <div className="checks">
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>90</p>
-              </div>
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>60</p>
-              </div>
-              <div className="check-container">
-                   <div className="check">  </div>
-                   <p>30</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* etiqueta QR */}
+          <EtiquetaQR qr_code={QRCode} id={params.id} />
 
         <Button
           appearance="primary"

@@ -26,46 +26,6 @@
     margin-top: 0.3rem;
 }
 
-.etiqueta-qr{
-    border: 1px solid rgb(213, 213, 213);
-}
-
-.codigo-reactivo{
-    text-align: center;
-    border-bottom: 1px solid rgb(213, 213, 213);
-}
-
-.vencimiento{
-    border-top: 1px solid rgb(213, 213, 213);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.checks{
-    display: flex;
-}
-
-.check{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid;
-    margin: 0 30px;
-    border-radius: 7px;
-
-}
-
-.check-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 @media print {
     .no-print {
       display: none;
