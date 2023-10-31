@@ -18,3 +18,9 @@ body{
   background-color: #fdfdfd;
   color: black;
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

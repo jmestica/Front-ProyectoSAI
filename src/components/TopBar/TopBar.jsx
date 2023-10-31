@@ -36,7 +36,7 @@ function TopBar() {
   }
 
   return (
-    <div className="header">
+    <div className="header no-print">
       <div className="logo">
         <QrcodeIcon className="logo-icon" />
         <Link to="/tracker">

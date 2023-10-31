@@ -26,8 +26,3 @@
     margin-top: 0.3rem;
 }
 
-@media print {
-    .no-print {
-      display: none;
-    }
-  }

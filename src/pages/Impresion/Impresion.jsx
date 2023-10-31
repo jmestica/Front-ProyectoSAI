@@ -37,7 +37,7 @@ function Impresion() {
             window.print();
           }}
         >
-          <AiFillPrinter style={{ marginRight: "10px" }} /> Imprimir{" "}
+          <AiFillPrinter style={{ marginRight: "10px" }} /> Imprimir
         </Button>
         <Button
           className="float"
@@ -45,7 +45,7 @@ function Impresion() {
           color="red"
           onClick={() => {window.history.back()}}
         >
-          <BiArrowBack style={{ marginRight: "10px" }} /> Atrás{" "}
+          <BiArrowBack style={{ marginRight: "10px" }} /> Atrás
         </Button>
       </div>
 
