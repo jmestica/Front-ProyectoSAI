@@ -1,7 +1,8 @@
 import QrcodeIcon from "@rsuite/icons/Qrcode";
 import "./TopBar.css";
-import { Button, Badge, Drawer } from "rsuite";
+import { Button, Badge, Drawer, IconButton } from "rsuite";
 import { Link, useNavigate } from "react-router-dom";
+import { BsFillTrashFill } from "react-icons/bs";
 
 //Context
 import { useContext } from "react";
@@ -17,11 +18,10 @@ import { RxCross2 } from "react-icons/rx";
 function TopBar() {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
-  const { PrintCount, PrintList, deleteItem, decrementPrint} = usePrint();
+  const { PrintCount, PrintList, deleteItem, decrementPrint, deleteAll } = usePrint();
 
   const { estado, openDrawer, closeDrawer } = useDrawer();
 
-  
   const logout = async () => {
     setAuth({});
     sessionStorage.removeItem("a_t_l_p");
@@ -29,11 +29,14 @@ function TopBar() {
   };
 
   const borrarItem = (codigo_reactivo) => {
-    
-    deleteItem(codigo_reactivo)
-    decrementPrint()
+    deleteItem(codigo_reactivo);
+    decrementPrint();
+  };
 
-  }
+  const emptyPrintList = () => {
+    // Vaciar la lista de impresión en localStorage
+    deleteAll();
+  };
 
   return (
     <div className="header no-print">
@@ -73,7 +76,7 @@ function TopBar() {
           <Drawer.Title>Lista de Impresión</Drawer.Title>
           <Drawer.Actions>
             <Button onClick={() => closeDrawer()}>Cerrar</Button>
-            <Button href="/tracker/impresion"  appearance="primary">
+            <Button href="/tracker/impresion" appearance="primary">
               Imprimir
             </Button>
           </Drawer.Actions>
@@ -85,7 +88,13 @@ function TopBar() {
                 return (
                   <div className="row-etiqueta" key={reactivo}>
                     <b>{reactivo.codigo_reactivo}</b>
-                    <Button appearance="primary" color="red" onClick={() => { borrarItem(reactivo.codigo_reactivo) } }>
+                    <Button
+                      appearance="primary"
+                      color="red"
+                      onClick={() => {
+                        borrarItem(reactivo.codigo_reactivo);
+                      }}
+                    >
                       <RxCross2 />
                     </Button>
                   </div>
@@ -95,6 +104,16 @@ function TopBar() {
           ) : (
             <p> La lista está vacía..</p>
           )}
+
+          <IconButton
+            className="float-icon"
+            appearance="primary"
+            color="red"
+            icon={<BsFillTrashFill />}
+            circle
+            size="lg"
+            onClick={emptyPrintList}
+          />
         </Drawer.Body>
       </Drawer>
     </div>

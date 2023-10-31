@@ -35,6 +35,12 @@
     border-bottom: 1px solid #e2e2e2;
 }
 
+.float-icon{
+    position: absolute !important;
+    right: 10%;
+    bottom: 10%;
+}
+
 @media only screen and (max-width: 680px) {
 
     .logo-icon{
@@ -53,5 +59,6 @@
     .btn-text{
         display: none;
     }
+    
 
 }

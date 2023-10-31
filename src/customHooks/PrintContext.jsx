@@ -32,7 +32,6 @@ export const PrintProvider = ({ children }) => {
   };
 
   const deleteItem = (codigo_reactivo) => {
-    
     // Obtener la lista actual desde localStorage
     const listaActual =
       JSON.parse(localStorage.getItem("lista_impresion")) || [];
@@ -49,6 +48,15 @@ export const PrintProvider = ({ children }) => {
     setPrintList(nuevaLista);
   };
 
+  const deleteAll = () => {
+    // Vaciar la lista de impresión en localStorage
+    localStorage.setItem("lista_impresion", JSON.stringify([]));
+
+    setPrintList([]);
+
+    setPrintCount(0)
+  };
+
   return (
     <PrintContext.Provider
       value={{
@@ -57,7 +65,8 @@ export const PrintProvider = ({ children }) => {
         incrementPrint,
         decrementPrint,
         updatePrintList,
-        deleteItem
+        deleteItem,
+        deleteAll
       }}
     >
       {children}
