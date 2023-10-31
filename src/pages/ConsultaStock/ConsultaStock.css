@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.table-container-stock {
+    margin: 0 auto;
+    width: 100%;
+}
+      
 
 @media only screen and (max-width: 780px) {
 
@@ -12,7 +17,12 @@
     }
 
 .filter-container .rs-picker{
-    margin: 10px 0;
+    margin: 10px;
+}
+
+.table-container-stock {
+    margin: 0 auto;
+    width: 100%;
 }
 
 }
