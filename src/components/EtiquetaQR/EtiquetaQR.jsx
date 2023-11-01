@@ -5,7 +5,7 @@ import './EtiquetaQR.css'
 export default function EtiquetaQR({id, qr_code}) {
   return (
     <>
-        <div className="etiqueta-qr" style={{width: '15rem'}}>
+        <div className="etiqueta-qr" style={{width: '13rem'}}>
           <h4 className="codigo-reactivo">{id}</h4>
 
           <div className="img-container">
