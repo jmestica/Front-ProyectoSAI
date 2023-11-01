@@ -42,29 +42,44 @@ function Consumo() {
 
     const fecha_actual = new Date().toLocaleDateString();
 
-    const nuevoConsumo = {
-      codigo: params.id,
-      cantidad_usada: event.target.elements.cantidad_usada.value,
-      registro_consumo: fecha_actual,
-      nombre_usuario: sessionStorage.getItem("username"),
-      cantidad_actual: cantidadActual != null ? (cantidadActual - event.target.elements.cantidad_usada.value) :  infoReactivo.cantidad - event.target.elements.cantidad_usada.value
-    };
-
-    const res = await axios.post(
-      `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
-      nuevoConsumo
-    );
+    const cant_ingresada = event.target.elements.cantidad_usada.value
+    let cant_reactivo = cantidadActual || infoReactivo.cantidad
     
+    console.log(cant_reactivo - cant_ingresada)
 
-    if (res.data.success) {
+    if (cant_reactivo - cant_ingresada >= 0 && cant_ingresada > 0) {
 
-      event.target.reset()
-      navigate(`/tracker/historial/${params.id}`, {replace: true});
-      toaster.push(successNotification, { placement: "topCenter" });
-      
+      const nuevoConsumo = {
+        codigo: params.id,
+        cantidad_usada: cant_ingresada,
+        registro_consumo: fecha_actual,
+        nombre_usuario: sessionStorage.getItem("username"),
+        cantidad_actual: cantidadActual != null ? cantidadActual - event.target.elements.cantidad_usada.value :  infoReactivo.cantidad - event.target.elements.cantidad_usada.value
+      };
+  
+      const res = await axios.post(
+        `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
+        nuevoConsumo
+      );
+
+      if (res.data.success) {
+
+        event.target.reset()
+        navigate(`/tracker/historial/${params.id}`, {replace: true});
+        toaster.push(successNotification, { placement: "topCenter" });
+        
+      } else {
+        toaster.push(errorNotification, { placement: "topCenter" });
+      }
+
     } else {
+
       toaster.push(errorNotification, { placement: "topCenter" });
+
+
     }
+
+  
 
   };
   

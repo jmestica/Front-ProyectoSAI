@@ -1,6 +1,6 @@
 .hoja{
+    margin: 80px;
     width: 750px;
-    border: 1px solid black;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
