@@ -27,7 +27,7 @@ function GestionarReactivoEscaneado() {
           <Col >
             <Card img_path={img1} title="Ver Historial" xl={6} link={`/tracker/historial/${params.id}`}/>
             <Card img_path={img2} title="Registrar consumo" xl={6} link={`/tracker/consumo/${params.id}`}/>
-            <Card img_path={img3} title="Editar Historial" xl={6}/>
+            <Card img_path={img3} title="Editar Reactivo" link={`/tracker/editar/${params.id}`} xl={6}/>
             <Card img_path={img4} title="Obtener QR" xl={6} link={`/tracker/qr/${params.id}`}/>
           </Col>
         </Row>
