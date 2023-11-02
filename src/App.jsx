@@ -19,6 +19,7 @@ import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Consumo from "./pages/Consumo/Consumo";
 import ConsultaStock from "./pages/ConsultaStock/ConsultaStock";
 import Impresion from "./pages/Impresion/Impresion";
+import EditarReactivo from "./pages/EditarReactivo/EditarReactivo";
 
 function App() {
   return (
@@ -63,6 +64,8 @@ function App() {
             />
 
             <Route path="/tracker/consumo/:id" exact element={<Consumo />} />
+
+            <Route path="/tracker/editar/:id" exact element={<EditarReactivo/>}/>
 
             <Route path="/tracker/impresion" exact element={<Impresion />} />
 
