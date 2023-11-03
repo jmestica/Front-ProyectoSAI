@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import TopBar from "../../components/TopBar/TopBar"
 import "./Consumo.css"
-import { Button, Form, Input, useToaster, Notification, InputNumber } from "rsuite"
+import { Button, Form, useToaster, Notification, InputNumber } from "rsuite"
 import axios from "axios"
 import { API_URL, PORT } from "../../../config";
 import { useFetchUltimoConsumo } from "../../customHooks/useFetch/useFetchUltimoConsumo"
 import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo"
 
-
-// eslint-disable-next-line react/display-name
-const Textarea = React.forwardRef((props, ref) => (
-  <Input {...props} as="textarea" ref={ref} />
-))
 
 function Consumo() {
 
