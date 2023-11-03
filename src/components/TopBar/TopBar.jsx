@@ -38,6 +38,11 @@ function TopBar() {
     deleteAll();
   };
 
+  const profile = sessionStorage.getItem("username");
+
+  const initials = profile.slice(0, 2).toUpperCase();
+
+
   return (
     <div className="header no-print">
       <div className="logo">
@@ -46,6 +51,7 @@ function TopBar() {
           <h2 className="title">QR-Tracker</h2>
         </Link>
       </div>
+
 
       <div className="logout">
         <Badge
@@ -60,11 +66,18 @@ function TopBar() {
             <AiFillPrinter />
           </Button>
         </Badge>
-
-        <Button color="red" appearance="primary" onClick={logout}>
-          <p className="btn-text">Cerrar Sesión</p> &nbsp; <BiExit />
-        </Button>
       </div>
+
+      <Button color="red" appearance="primary" onClick={logout}>
+        <p className="btn-text">Cerrar Sesión</p> &nbsp; <BiExit />
+      </Button>
+
+      {
+        profile && <p className="header-profile"> {profile} </p>
+      }
+      {
+        initials && <p className="header-initials"> {initials} </p>
+      }
 
       <Drawer
         placement="right"

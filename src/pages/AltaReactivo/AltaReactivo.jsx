@@ -197,7 +197,7 @@ function AltaReactivo() {
             </Form.Group>
 
             <Button block appearance="primary" type="submit" className="main-btn">
-              Dar de Alta Pieza
+              Dar de Alta Reactivo
             </Button>
             
           </Form>

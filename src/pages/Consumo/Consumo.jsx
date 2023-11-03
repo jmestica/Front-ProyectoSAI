@@ -22,7 +22,7 @@ function Consumo() {
   const toaster = useToaster();
   const navigate = useNavigate();
 
-  
+
   const successNotification = (
     <Notification header="Se insertó con éxito" type="success">
       <p>El consumo se registró exitosamente</p>
@@ -44,8 +44,7 @@ function Consumo() {
 
     const cant_ingresada = event.target.elements.cantidad_usada.value
     let cant_reactivo = cantidadActual || infoReactivo.cantidad
-    
-    console.log(cant_reactivo - cant_ingresada)
+
 
     if (cant_reactivo - cant_ingresada >= 0 && cant_ingresada > 0) {
 
@@ -54,9 +53,21 @@ function Consumo() {
         cantidad_usada: cant_ingresada,
         registro_consumo: fecha_actual,
         nombre_usuario: sessionStorage.getItem("username"),
-        cantidad_actual: cantidadActual != null ? cantidadActual - event.target.elements.cantidad_usada.value :  infoReactivo.cantidad - event.target.elements.cantidad_usada.value
+        cantidad_actual: cantidadActual != null ? cantidadActual - event.target.elements.cantidad_usada.value : infoReactivo.cantidad - event.target.elements.cantidad_usada.value
       };
-  
+
+      //controla si el stock llega a cero para marcar como finalizado el reactivo.
+      if (nuevoConsumo.cantidad_actual === 0) {
+
+        // const res = await axios.post(
+        //   `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
+        //   nuevoConsumo
+        // );
+        // revisar endpoint para editar el reactivo
+        
+        return;  
+      }
+
       const res = await axios.post(
         `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
         nuevoConsumo
@@ -65,9 +76,9 @@ function Consumo() {
       if (res.data.success) {
 
         event.target.reset()
-        navigate(`/tracker/historial/${params.id}`, {replace: true});
+        navigate(`/tracker/historial/${params.id}`, { replace: true });
         toaster.push(successNotification, { placement: "topCenter" });
-        
+
       } else {
         toaster.push(errorNotification, { placement: "topCenter" });
       }
@@ -79,10 +90,10 @@ function Consumo() {
 
     }
 
-  
+
 
   };
-  
+
 
   return (
     <>
@@ -92,10 +103,10 @@ function Consumo() {
         <h4 className="section-title">Agregar consumo - {params.id}</h4>
 
         <div className="form-container">
-          
+
           <Form onSubmit={handleSubmit} fluid>
 
-          <Form.Group controlId="cantidad_usada">
+            <Form.Group controlId="cantidad_usada">
               <Form.ControlLabel>Cantidad (ml)</Form.ControlLabel>
               <Form.Control accepter={InputNumber} name="cantidad_usada" required />
               <Form.HelpText>Cantidad actual: {cantidadActual != null ? cantidadActual : infoReactivo.cantidad} ml</Form.HelpText>

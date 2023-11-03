@@ -32,11 +32,11 @@ function BuscarReactivo() {
     if (searchTerm == null) {
       const notFound = (
         <Notification
-          header="El identificador de pieza es inválido"
+          header="El identificador de reactivo es inválido"
           closable
           type="error"
         >
-          No se encontró ninguna pieza con ese identificador, por favor, verifiquelo
+          No se encontró ningún reactivo con ese identificador, por favor, verifiquelo
           e intente nuevamente
         </Notification>
       );
@@ -48,11 +48,11 @@ function BuscarReactivo() {
   /*FEATURES: dinamizar este componente */
   const notFound = (
     <Notification
-      header="El identificador de pieza es inválido"
+      header="El identificador del reactivo es inválido"
       closable
       type="error"
     >
-      No se encontró ninguna pieza con ese identificador, por favor, verifiquelo
+      No se encontró ningun reactivo con ese identificador, por favor, verifiquelo
       e intente nuevamente
     </Notification>
   );
