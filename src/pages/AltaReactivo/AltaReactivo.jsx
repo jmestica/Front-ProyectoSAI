@@ -206,7 +206,7 @@ function AltaReactivo() {
               type="submit"
               className="main-btn"
             >
-              Dar de Alta Pieza
+              Dar de Alta Reactivo
             </Button>
           </Form>
         </div>
