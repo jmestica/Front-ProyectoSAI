@@ -20,14 +20,21 @@ import Consumo from "./pages/Consumo/Consumo";
 import ConsultaStock from "./pages/ConsultaStock/ConsultaStock";
 import Impresion from "./pages/Impresion/Impresion";
 import EditarReactivo from "./pages/EditarReactivo/EditarReactivo";
+import { NotAuthenticated } from "./components/NotAuth/NotAuthenticated";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
+
           {/* Root path */}
-          <Route path="/" element={<Login />} />
+          <Route exact path='/'
+            element={
+              <NotAuthenticated >
+                <Login />
+              </NotAuthenticated>
+            } />
 
           <Route path="*" element={<Error404 />} />
 
@@ -65,7 +72,7 @@ function App() {
 
             <Route path="/tracker/consumo/:id" exact element={<Consumo />} />
 
-            <Route path="/tracker/editar/:id" exact element={<EditarReactivo/>}/>
+            <Route path="/tracker/editar/:id" exact element={<EditarReactivo />} />
 
             <Route path="/tracker/impresion" exact element={<Impresion />} />
 
