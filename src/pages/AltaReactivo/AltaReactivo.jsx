@@ -28,11 +28,14 @@ import { API_URL, PORT } from "../../../config.js";
 const nombres_reactivos = [
   { label: "Acetona Grado Plaguicida", value: "ACP" },
   { label: "Acetona PA", value: "ACE" },
-  { label: "Cloruro de Metileno Grado Plaguicida - Diclorometano", value: "CLO"},
-  {label: "Éter de Petróleo Grado Plaguicida", value: "ETP"},
-  {label: "Sulfato de Sodio Anhidro", value: "SUL"},
-  {label: "Hexano Grado Plaguicida", value: "HEX"},
-  {label: "Metanol Grado Plaguicida",value: "MET"},
+  {
+    label: "Cloruro de Metileno Grado Plaguicida - Diclorometano",
+    value: "CLO",
+  },
+  { label: "Éter de Petróleo Grado Plaguicida", value: "ETP" },
+  { label: "Sulfato de Sodio Anhidro", value: "SUL" },
+  { label: "Hexano Grado Plaguicida", value: "HEX" },
+  { label: "Metanol Grado Plaguicida", value: "MET" },
 ].map((item) => ({ label: item.label, value: item.value }));
 
 function AltaReactivo() {
@@ -69,8 +72,9 @@ function AltaReactivo() {
 
     //Generación de código
     const prefijo_laboratorio = "C";
-    let codigo_reactivo = prefijo_laboratorio + formulario.nombre.defaultValue + contador;
-   
+    let codigo_reactivo =
+      prefijo_laboratorio + formulario.nombre.defaultValue + contador;
+
     //Fecha de registro
     const date = new Date();
     const fecha_registro = date.toLocaleDateString("es-AR");
@@ -92,28 +96,27 @@ function AltaReactivo() {
       contador: contador + 1,
     };
 
-    console.log(nuevoReactivo);
-
-    const response = await axios.post(
-      `http://${API_URL}:${PORT}/api/reactivo/`,
-      nuevoReactivo
-    );
-
-    console.log(response);
-
-    if (response.status === 200) {
-      navigate(`/tracker/qr/${codigo_reactivo}`);
+    if (!nuevoReactivo.nombre_reactivo || !nuevoReactivo.fecha_vto) {
+      toaster.push(errorMessage);
     } else {
-      toaster.push(errorMessage, { placement: "topCenter" });
+      const response = await axios.post(
+        `http://${API_URL}:${PORT}/api/reactivo/`,
+        nuevoReactivo
+      );
+
+      if (response.status === 200) {
+        navigate(`/tracker/qr/${codigo_reactivo}`);
+      } else {
+        toaster.push(errorMessage, { placement: "topCenter" });
+      }
     }
   };
 
   const errorMessage = (
-    <Notification
-      type="error"
-      header="Error en la creación"
-      closable
-    ></Notification>
+    <Notification type="error" header="Error en la creación" closable>
+      {" "}
+      Faltan datos obligatorios{" "}
+    </Notification>
   );
 
   return (
