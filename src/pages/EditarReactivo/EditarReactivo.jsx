@@ -102,7 +102,8 @@ function EditarReactivo() {
 
       const res = await axios.patch(`http://${API_URL}:${PORT}/api/reactivo/${params.id}`, reactivo)
 
-      res.statusCode === 200 ? toaster.push(success) : toaster.push(error);
+
+      res.status === 200 ? toaster.push(success) : toaster.push(error);
 
     }
   };
