@@ -18,7 +18,8 @@ import { RxCross2 } from "react-icons/rx";
 function TopBar() {
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
-  const { PrintCount, PrintList, deleteItem, decrementPrint, deleteAll } = usePrint();
+  const { PrintCount, PrintList, deleteItem, decrementPrint, deleteAll } =
+    usePrint();
 
   const { estado, openDrawer, closeDrawer } = useDrawer();
 
@@ -42,7 +43,6 @@ function TopBar() {
 
   const initials = profile.slice(0, 2).toUpperCase();
 
-
   return (
     <div className="header no-print">
       <div className="logo">
@@ -52,32 +52,31 @@ function TopBar() {
         </Link>
       </div>
 
-
-      <div className="logout">
+      <div className="div" style={{ display: "flex" }}>
         <Badge
           content={PrintCount}
           onClick={() => {
             openDrawer();
           }}
-          style={{ margin: "0 30px" }}
         >
           <Button>
             <p className="btn-text">Lista de Impresión</p> &nbsp;{" "}
             <AiFillPrinter />
           </Button>
         </Badge>
+
+        <Button
+          color="red"
+          appearance="primary"
+          onClick={logout}
+          style={{ margin: "0 10px" }}
+        >
+          <p className="btn-text">Cerrar Sesión</p> &nbsp; <BiExit />
+        </Button>
+
+        {profile && <p className="header-profile"> {profile} </p>}
+        {initials && <p className="header-initials"> {initials} </p>}
       </div>
-
-      <Button color="red" appearance="primary" onClick={logout}>
-        <p className="btn-text">Cerrar Sesión</p> &nbsp; <BiExit />
-      </Button>
-
-      {
-        profile && <p className="header-profile"> {profile} </p>
-      }
-      {
-        initials && <p className="header-initials"> {initials} </p>
-      }
 
       <Drawer
         placement="right"
