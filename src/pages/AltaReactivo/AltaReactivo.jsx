@@ -96,9 +96,12 @@ function AltaReactivo() {
       contador: contador + 1,
     };
 
-    if (!nuevoReactivo.nombre_reactivo || !nuevoReactivo.fecha_vto) {
+
+
+    if (nuevoReactivo.nombre_reactivo === 'Seleccione el reactivo' || !nuevoReactivo.fecha_vto) {
       toaster.push(errorMessage);
     } else {
+      console.log('pass')
       const response = await axios.post(
         `http://${API_URL}:${PORT}/api/reactivo/`,
         nuevoReactivo
