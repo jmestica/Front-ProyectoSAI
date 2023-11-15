@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Form, Table, SelectPicker, InputPicker, Button, Loader, Placeholder, Notification, useToaster } from 'rsuite';
+import { useNavigate } from "react-router-dom";
 
 
 import TopBar from "../../components/TopBar/TopBar";
@@ -23,6 +25,8 @@ const stock = ['En Stock', 'Sin Stock', 'Descartado', 'Vencido'].map(
 );
 
 function ConsultaStock() {
+
+  const navigate = useNavigate();
 
   const [tableData, setTableData] = useState([]);
   const [labFilter, setLabFilter] = useState('');
@@ -116,6 +120,14 @@ function ConsultaStock() {
 
   }, [tableData]);
 
+  const gestionarReactivo = (data) => {
+
+      const {codigo} = data;
+
+      navigate(`/tracker/gestionar-reactivo/${codigo}`);
+
+  }
+
 
   return (
 
@@ -176,7 +188,7 @@ function ConsultaStock() {
         }
 
         <div className="table-container-stock">
-          <Table autoHeight cellBordered bordered data={tableData}>
+          <Table autoHeight width={790} cellBordered bordered onRowClick={(data)=>{gestionarReactivo(data)}} data={tableData}>
             <Column align="center" width={38}>
               <HeaderCell>#</HeaderCell>
               <Cell dataKey="index" />
