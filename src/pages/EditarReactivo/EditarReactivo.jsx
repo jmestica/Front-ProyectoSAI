@@ -153,7 +153,7 @@ function EditarReactivo() {
               <div className="row-input">
                 <InputNumber
                   value={reactivo.cantidad}
-                  onChange={handleChange}
+                  readOnly
                   name="cantidad"
                 />
                 <Input plaintext value="Mililitros" className="input-plain" />
