@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import TopBar from "../../components/TopBar/TopBar";
 import './ConsultaStock.css'
-import { API_URL, PORT } from '../../../config';
+import { API_URL } from '../../../config';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -81,7 +81,7 @@ function ConsultaStock() {
 
     try {
 
-      const res = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/getFiltrados?labFilter=${labFilter}&tipoFilter=${tipoFilter}&stockFilter=${stockFilter}`);
+      const res = await axios.get(`http://${API_URL}/api/reactivo/getFiltrados?labFilter=${labFilter}&tipoFilter=${tipoFilter}&stockFilter=${stockFilter}`);
 
       if (res.statusText !== "OK") {
 

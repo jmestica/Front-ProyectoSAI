@@ -13,7 +13,7 @@ import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, forwardRef } from "react";
 import axios from "axios";
-import { API_URL, PORT } from "../../../config";
+import { API_URL } from "../../../config";
 
 const nombres_reactivos = [
   { label: "Acetona Grado Plaguicida", value: "ACP" },
@@ -100,7 +100,7 @@ function EditarReactivo() {
       toaster.push(warning);
     } else {
 
-      const res = await axios.patch(`http://${API_URL}:${PORT}/api/reactivo/${params.id}`, reactivo)
+      const res = await axios.patch(`http://${API_URL}/api/reactivo/${params.id}`, reactivo)
 
 
       res.status === 200 ? toaster.push(success) : toaster.push(error);

@@ -23,7 +23,7 @@ const Textarea = React.forwardRef((props, ref) => (
 //==== Componentes y Estilos
 import TopBar from "../../components/TopBar/TopBar";
 import "./AltaReactivo.css";
-import { API_URL, PORT } from "../../../config.js";
+import { API_URL} from "../../../config.js";
 
 const nombres_reactivos = [
   { label: "Acetona Grado Plaguicida", value: "ACP" },
@@ -49,7 +49,7 @@ function AltaReactivo() {
     const fetchData = async () => {
       try {
         const respuesta_contador = await axios.get(
-          `http://${API_URL}:${PORT}/api/reactivo/contador`
+          `http://${API_URL}/api/reactivo/contador`
         );
 
         if (respuesta_contador.status === 200) {
@@ -103,7 +103,7 @@ function AltaReactivo() {
     } else {
       console.log('pass')
       const response = await axios.post(
-        `http://${API_URL}:${PORT}/api/reactivo/`,
+        `http://${API_URL}/api/reactivo/`,
         nuevoReactivo
       );
 
