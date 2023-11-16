@@ -3,7 +3,7 @@ import TopBar from "../../components/TopBar/TopBar"
 import "./Consumo.css"
 import { Button, Form, useToaster, Notification, InputNumber } from "rsuite"
 import axios from "axios"
-import { API_URL, PORT } from "../../../config";
+import { API_URL } from "../../../config";
 import { useFetchUltimoConsumo } from "../../customHooks/useFetch/useFetchUltimoConsumo"
 import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo"
 
@@ -54,7 +54,7 @@ function Consumo() {
       if (nuevoConsumo.cantidad_actual === 0) {
 
         // const res = await axios.post(
-        //   `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
+        //   `http://${API_URL}/api/reactivo/consumo/${params.id}`,
         //   nuevoConsumo
         // );
         // revisar endpoint para editar el reactivo
@@ -63,7 +63,7 @@ function Consumo() {
       }
 
       const res = await axios.post(
-        `http://${API_URL}:${PORT}/api/reactivo/consumo/${params.id}`,
+        `http://${API_URL}/api/reactivo/consumo/${params.id}`,
         nuevoConsumo
       );
 

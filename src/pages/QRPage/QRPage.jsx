@@ -8,7 +8,7 @@ import { usePrint } from "../../customHooks/PrintContext";
 import { useDrawer } from "../../customHooks/DrawerContext";
 
 import axios from "axios";
-import { API_URL, PORT } from "../../../config";
+import { API_URL } from "../../../config";
 import EtiquetaQR from "../../components/EtiquetaQR/EtiquetaQR";
 
 function QRPage() {
@@ -23,7 +23,7 @@ function QRPage() {
     async function fetchQRCode() {
       try {
         const response = await axios.get(
-          `http://${API_URL}:${PORT}/api/reactivo/getQR/${params.id}`
+          `http://${API_URL}/api/reactivo/getQR/${params.id}`
         );
 
         setQRCode(response.data.qr_code);

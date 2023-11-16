@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/TopBar/TopBar";
 import "./BuscarReactivo.css";
 
-import { API_URL, PORT } from "../../../config";
+import { API_URL} from "../../../config";
 
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import {
@@ -73,7 +73,7 @@ function BuscarReactivo() {
 
   const getReactivos = async () => {
     setLoading(true);
-    const res = await axios.get(`http://${API_URL}:${PORT}/api/reactivo/getAll`);
+    const res = await axios.get(`http://${API_URL}/api/reactivo/getAll`);
     if (res.statusText !== "OK") {
       toaster.push(errorConnection, { placement: "TopCenter" });
       return;

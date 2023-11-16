@@ -22,7 +22,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import "./Login.css";
 import useAuth from "../../customHooks/useAuth";
-import {API_URL, PORT}  from "../../../config";
+import {API_URL}  from "../../../config";
 
 
 function Login() {
@@ -44,7 +44,7 @@ function Login() {
     };
 
     const response = await axios.post(
-      `http://${API_URL}:${PORT}/api/login`,
+      `http://${API_URL}/api/login`,
       credentials
     );
 
