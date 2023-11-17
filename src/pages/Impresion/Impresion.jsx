@@ -53,6 +53,7 @@ function Impresion() {
         {QRCodes.map((etiqueta) => {
           return (
             <EtiquetaQR
+            style={{marginTop: "10px" }}
               key={etiqueta.codigo_reactivo}
               id={etiqueta.codigo_reactivo}
               qr_code={etiqueta.qr_code}
