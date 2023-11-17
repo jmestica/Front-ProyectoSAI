@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL, PORT } from "../../../config";
+import { API_URL} from "../../../config";
 
 
 export const useFetchReactivo = () => {
@@ -16,7 +16,7 @@ export const useFetchReactivo = () => {
 
         try {
             const res = await axios.get(
-                `http://${API_URL}:${PORT}/api/reactivo/${params.id}`
+                `http://${API_URL}/api/reactivo/${params.id}`
             );
 
             if (res.statusText !== "OK") {
