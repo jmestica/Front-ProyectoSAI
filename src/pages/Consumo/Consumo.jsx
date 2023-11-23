@@ -23,6 +23,12 @@ function Consumo() {
     </Notification>
   );
 
+  const successFinished = (
+    <Notification header='Reactivo finalizado' type={response?.status === 200 ? 'succes' : 'error' }>
+      <p>{response?.msg}</p>
+    </Notification>
+  );
+
   const errorNotification = (
     <Notification header="No se pudo insertar el consumo" type="error">
       <p>
@@ -52,14 +58,8 @@ function Consumo() {
 
       //controla si el stock llega a cero para marcar como finalizado el reactivo.
       if (nuevoConsumo.cantidad_actual === 0) {
-
-        // const res = await axios.post(
-        //   `http://${API_URL}/api/reactivo/consumo/${params.id}`,
-        //   nuevoConsumo
-        // );
-        // revisar endpoint para editar el reactivo
-        
-        return;  
+        const response = await axios.put(`http://${API_URL}/api/reactivo/finished/${params.id}`);
+        toaster.push(successFinished, { placement: "topCenter" });
       }
 
       const res = await axios.post(
