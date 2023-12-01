@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL} from "../../../config";
+import { API_URL }  from "../../../config";
 
 
 export const useFetchReactivo = () => {

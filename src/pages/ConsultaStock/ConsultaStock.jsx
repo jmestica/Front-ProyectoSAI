@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import TopBar from "../../components/TopBar/TopBar";
 import './ConsultaStock.css'
-import { API_URL } from '../../../config';
+import { API_URL, PORT } from "../../../config";
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -102,8 +102,12 @@ function ConsultaStock() {
         ...item,
         index: contador + index,
         fechaIngreso: new Date(`${item.fecha_ingreso}`).toLocaleDateString(),
-        fechaVto: new Date(`${item.fecha_vto}`).toLocaleDateString()
+        fechaVto: new Date(`${item.fecha_vto}`).toLocaleDateString(),
+        fechaFin: item.fecha_finalizacion ? new Date(`${item.fecha_finalizacion}`).toLocaleDateString() : "-",
+        fechaDescartado: item.fecha_descarte ? new Date(`${item.fecha_descarte}`).toLocaleDateString() : "-"
       }));
+
+      console.log(filteredData)
 
       setTableData(filteredData);
       setLoading(false)
@@ -188,7 +192,7 @@ function ConsultaStock() {
         }
 
         <div className="table-container-stock">
-          <Table autoHeight width={790} cellBordered bordered onRowClick={(data)=>{gestionarReactivo(data)}} data={tableData}>
+          <Table autoHeight width={1000} cellBordered bordered onRowClick={(data)=>{gestionarReactivo(data)}} data={tableData}>
             <Column align="center" width={38}>
               <HeaderCell>#</HeaderCell>
               <Cell dataKey="index" />
@@ -206,10 +210,6 @@ function ConsultaStock() {
               <Cell dataKey="fechaIngreso" />
             </Column>
             <Column align="center" width={100}>
-              <HeaderCell>Vencimiento</HeaderCell>
-              <Cell dataKey="fechaVto" />
-            </Column>
-            <Column align="center" width={100}>
               <HeaderCell>N° Lote</HeaderCell>
               <Cell dataKey="nro_lote" />
             </Column>
@@ -218,9 +218,21 @@ function ConsultaStock() {
               <Cell dataKey="nro_expediente" />
             </Column>
             <Column align="center" width={100}>
+              <HeaderCell>Vencimiento</HeaderCell>
+              <Cell dataKey="fechaVto" />
+            </Column>
+            <Column align="center" width={100}>
+              <HeaderCell>Finalizado</HeaderCell>
+              <Cell dataKey="fechaFin" />
+            </Column>
+            <Column align="center" width={100}>
+              <HeaderCell>Descartado</HeaderCell>
+              <Cell dataKey="fechaDescartado" />
+            </Column>
+            <Column align="center" width={100}>
               <HeaderCell>Cantidad</HeaderCell>
               <Cell>
-                {rowData => rowData.cantidad + ' ml'}
+                {rowData => rowData.cantidad_actual + ' ml'}
               </Cell>
             </Column>
           </Table>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TopBar from "../../components/TopBar/TopBar";
 import "./BuscarReactivo.css";
 
-import { API_URL} from "../../../config";
+import { API_URL, PORT } from "../../../config";
 
 import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import {

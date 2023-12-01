@@ -3,7 +3,7 @@ import TopBar from "../../components/TopBar/TopBar"
 import "./Consumo.css"
 import { Button, Form, useToaster, Notification, InputNumber } from "rsuite"
 import axios from "axios"
-import { API_URL } from "../../../config";
+import { API_URL, PORT } from "../../../config";
 import { useFetchUltimoConsumo } from "../../customHooks/useFetch/useFetchUltimoConsumo"
 import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo"
 
@@ -24,8 +24,14 @@ function Consumo() {
   );
 
   const successFinished = (
-    <Notification header='Reactivo finalizado' type={response?.status === 200 ? 'succes' : 'error' }>
-      <p>{response?.msg}</p>
+    <Notification header='Reactivo finalizado' type='succes'>
+      <p>Se añadió correctamente la fecha de finalización del reactivo.</p>
+    </Notification>
+  );
+
+  const successNotFinished = (
+    <Notification header='Reactivo finalizado' type='error'>
+      <p>Ocurrió un error al registrar la fecha de finalización del reactivo.</p>
     </Notification>
   );
 
@@ -45,7 +51,6 @@ function Consumo() {
     const cant_ingresada = event.target.elements.cantidad_usada.value
     let cant_reactivo = cantidadActual || infoReactivo.cantidad
 
-
     if (cant_reactivo - cant_ingresada >= 0 && cant_ingresada > 0) {
 
       const nuevoConsumo = {
@@ -59,7 +64,10 @@ function Consumo() {
       //controla si el stock llega a cero para marcar como finalizado el reactivo.
       if (nuevoConsumo.cantidad_actual === 0) {
         const response = await axios.put(`http://${API_URL}/api/reactivo/finished/${params.id}`);
-        toaster.push(successFinished, { placement: "topCenter" });
+
+        response.status === 200 
+        ? toaster.push(successFinished, { placement: "topCenter" }) 
+        : toaster.push(successNotFinished, { placement: "topCenter" })
       }
 
       const res = await axios.post(
@@ -80,12 +88,7 @@ function Consumo() {
     } else {
 
       toaster.push(errorNotification, { placement: "topCenter" });
-
-
     }
-
-
-
   };
 
 

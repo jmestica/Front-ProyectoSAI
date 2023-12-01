@@ -23,7 +23,7 @@ const Textarea = React.forwardRef((props, ref) => (
 //==== Componentes y Estilos
 import TopBar from "../../components/TopBar/TopBar";
 import "./AltaReactivo.css";
-import { API_URL} from "../../../config.js";
+import { API_URL, PORT } from "../../../config";
 
 const nombres_reactivos = [
   { label: "Acetona Grado Plaguicida", value: "ACP" },

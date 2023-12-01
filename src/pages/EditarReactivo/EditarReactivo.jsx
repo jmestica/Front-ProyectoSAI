@@ -13,7 +13,7 @@ import { useFetchReactivo } from "../../customHooks/useFetch/useFetchReactivo";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, forwardRef } from "react";
 import axios from "axios";
-import { API_URL } from "../../../config";
+import { API_URL, PORT } from "../../../config";
 
 const nombres_reactivos = [
   { label: "Acetona Grado Plaguicida", value: "ACP" },

@@ -8,7 +8,7 @@ import { usePrint } from "../../customHooks/PrintContext";
 import { useDrawer } from "../../customHooks/DrawerContext";
 
 import axios from "axios";
-import { API_URL } from "../../../config";
+import { API_URL, PORT } from "../../../config";
 import EtiquetaQR from "../../components/EtiquetaQR/EtiquetaQR";
 
 function QRPage() {
